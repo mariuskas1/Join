@@ -10,3 +10,238 @@
     font-family: 'Inter', sans-serif;
     box-sizing: border-box;
   }
+
+
+main{
+    position: fixed;
+    top: 96px;
+    left: 232px;
+    padding-top: 110px; 
+    padding-left: 96px;
+    /* padding-bottom: 120px; */
+    background-color: rgb(246, 247, 248);
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    /* overflow-y: auto; */
+}
+
+main * {
+    border-radius: 10px;
+}
+
+h1{
+    font-weight: 700;
+    font-size: 61px;
+}
+
+h2{
+    margin-top: 24px;
+}
+
+.blue{
+    color:rgba(41, 171, 226, 1);
+}
+
+
+@media(max-height: 800px){
+    header{
+        height: 88px;
+    }
+    main{
+        height: calc(100vh - 88px);
+    }
+}
+
+
+::-webkit-scrollbar {
+    width: 0.6vw;
+    color: rgb(7, 7, 31);
+    
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(246, 247, 248);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 16px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+
+.help-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+.help-table td{
+    vertical-align: top;
+    padding: 10px;
+}
+
+.help-table td:first-child {
+    padding-right: 20px;
+}
+
+.help-table h2, .help-table h3, .help-table span {
+    margin: 0;
+}
+
+.help-table h2 {
+    margin-bottom: 10px;
+}
+
+
+.index-main{
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(246, 247, 248);
+    transition: all 125ms ease;
+}
+
+#main-content{
+    transition: all 125ms ease;
+}
+
+
+@media(max-width: 1300px){
+    main{
+        padding-left: 40px;
+    }
+}
+
+@media(max-width: 1000px){
+    main{
+        padding-left: 32px;
+    }
+}
+
+
+@media(max-width:600px){
+    main{
+        left: 0;
+        padding-left: 24px;
+    }
+
+    #signed-up-div{
+        display: none;
+    }
+    #sign-up-div-mobile{
+        display: block;
+        margin-top: 32px;
+        }
+    .index-header-logo{
+        width:64px;
+        height: 78px;
+    }
+    .index-header{
+        padding-left: 40px;
+    }
+    .log-in, .sign-up{
+        width: 100%;
+    }
+    .sign-up{
+        height: 540px;
+    }
+    .index-input{
+        height: 48px;
+    }
+    .log-in form, .sign-up form{
+        width: 80%;
+    }
+    .log-in-buttons-div{
+        width: 75%;
+    }
+  
+
+    .info-main{
+        position: fixed;
+        top: 88px;
+        left: 0px;
+        padding-top: 32px; 
+        padding-left: 24px;
+        padding-right: 24px;
+        width: 100%;
+        height: calc(100vh - 88px);
+        overflow: auto;
+        padding-bottom: 96px;
+    }
+    .addTaskColumn{
+        width: 90%;
+    }
+    .form-bottom{
+        width: 83%;
+        bottom: 104px;
+    }
+}
+
+
+.hidden{
+    opacity: 0;
+    transition: all 125ms ease;
+}
+
+@media(max-width: 600px) and (max-height: 800px){
+    header{
+        height: 80px;
+    }
+    main{
+        top: 80px;
+        padding-top: 16px;
+    }
+    .mobile-menu{
+        height: 72px;
+    }
+    .mobile-menu-div{
+        height: 68px;
+    }
+    #description{
+        height: 64px;
+        padding: 8px 16px 8px 16px;
+    }
+    .input-container{
+        height: 40px;
+    }
+    .input{
+        margin-bottom: 2px;
+    }
+    .form-bottom{
+        bottom: 88px;
+    }
+}
+
+.d-none{
+    display: none;
+}
+
+
+
+.task-display-large .input-container .radio-tile label {
+   margin-bottom: 16px;
+}
+
+
+@media (max-width: 500px) and (max-height: 750px) {
+    .task-display-large{
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    .contacts-display-header{
+        margin-top: 40px;
+    }
+    .large-task-display-footer{
+        margin-top: 0;
+    }
+    .task-display-large{
+        padding-bottom: 8px;
+    }
+}
