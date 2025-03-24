@@ -74,6 +74,9 @@
     border-radius: 10px;
     border: unset;
     transition: all 125ms ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sign-up-btn:hover{
@@ -127,6 +130,14 @@
     width: 100%;
     margin-bottom: 24px;
     height: 48px;
+    padding-left: 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.index-input:focus {
+    border: 1px solid #888;
 }
 
 .log-in form{

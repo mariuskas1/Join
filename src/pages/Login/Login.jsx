@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
+import "../../index.css";
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/login/";
 const GUEST_URL = "https://marius-kasparek.developerakademie.org/join_server/api/guest-login/";
@@ -169,14 +170,6 @@ const Login = () => {
                             <button type="button" onClick={guestLogin} className="guest-log-in-btn">Guest Log in</button>
                         </div>
                     </form>
-                </div>
-
-                {/* Mobile Sign-up */}
-                <div className="index-header-div">
-                    <span className="index-header-text">Not a Join user?</span>
-                    <Link to="/sign-up" className="sign-up-btn">
-                        Sign up
-                    </Link>
                 </div>
 
                 {/* Links */}
