@@ -10,6 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [showLogo, setShowLogo] = useState(true);
 
     const logoRef = useRef(null);
     const mainContentRef = useRef(null);
@@ -25,7 +26,6 @@ const Login = () => {
     }, []);
 
     function startLogoAnimation() {
-        if (!logoRef.current) return;
 
         const headerLogo = document.getElementById("index-header-logo");
         if (!headerLogo) return;
@@ -46,7 +46,7 @@ const Login = () => {
             if (mainContentRef.current) {
                 mainContentRef.current.classList.remove("hidden");
             }
-            logoRef.current.style.display = "none";
+            setShowLogo(false);
         }, 1000);
     }
 
@@ -105,9 +105,17 @@ const Login = () => {
     return (
         <div>
             {/* Initial Logo Animation */}
-            <div className="initial-logo-div" id="initial-logo-div">
-                <img ref={logoRef} src="/assets/img/logo_dark.png" className="initial-index-logo" id="initial-index-logo" alt="Logo" />
-            </div>
+            {showLogo && (
+                <div className="initial-logo-div" id="initial-logo-div">
+                    <img
+                        ref={logoRef}
+                        src="/assets/img/logo_dark.png"
+                        className="initial-index-logo"
+                        id="initial-index-logo"
+                        alt="Logo"
+                    />
+                </div>
+            )}
 
             {/* Main Content */}
             <div className="index-main hidden" ref={mainContentRef}>
