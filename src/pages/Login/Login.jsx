@@ -124,7 +124,7 @@ const Login = () => {
                     <img src="/assets/img/logo_dark.png" className="index-header-logo" id="index-header-logo" alt="Logo" />
                     <div className="index-header-div">
                         <span className="index-header-text">Not a Join user?</span>
-                        <Link to="/sign-up" className="sign-up-btn">
+                        <Link to="/signup" className="sign-up-btn">
                             Sign up
                         </Link>
                     </div>

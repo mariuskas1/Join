@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import "./Signup.css";
 import "../../index.css";
 
@@ -94,12 +95,9 @@ const SignUp = () => {
         </div>
   
         <div className="sign-up">
-          <img
-            src="assets/img/arrow-left-line.png"
-            className="return-img-sign-up"
-            alt="back"
-            onClick={() => window.location.href = "index.html"}
-          />
+            <Link to="/" className="return-img-sign-up">
+                <img src="assets/img/arrow-left-line.png" alt="back" />
+            </Link>
           <h2>Sign up</h2>
           <div className="log-in-underline"></div>
           <form id="sign-up-form" onSubmit={signUp}>
