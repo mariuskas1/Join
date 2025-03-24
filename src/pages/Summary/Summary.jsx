@@ -33,17 +33,19 @@ const Summary = () => {
     }, [currentUser]);
 
     useEffect(() => {
-        displayGreeting();
-    }, []);
+        if (currentUser) {
+            displayGreeting();
+        }
+    }, [currentUser]);
 
-    const getCurrentUserData = async () => {
-        // Example fetch for current user - replace with actual logic
-        setCurrentUser({
-            name: "John Doe",
-            token: "your-token-here",
-            isGuest: false,
-        });
-    };
+    const getCurrentUserData = () => {
+        let currentUserLocalStorage = localStorage.getItem("currentUser");
+        if (currentUserLocalStorage) {
+            setCurrentUser(JSON.parse(currentUserLocalStorage));
+        } else {
+            setCurrentUser(null);
+        }
+    }
 
     const getAllTasks = async () => {
         try {
@@ -125,10 +127,14 @@ const Summary = () => {
             greetingText = "Good evening,";
         }
 
+        if (currentUser && currentUser.isGuest) {
+            greetingText = greetingText.slice(0, -1) + "!"; 
+        } else if (currentUser && currentUser.name) {
+            greetingText = `${greetingText} ${currentUser.name}`; 
+        }
+
         setGreeting(greetingText);
     };
-
-
 
 
     return (
