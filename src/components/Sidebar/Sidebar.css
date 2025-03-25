@@ -58,6 +58,10 @@ a{
     color: white;
 }
 
+.side-menu-div.active .sidebar-icon{
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(306deg) brightness(103%) contrast(101%);
+}
+
 .sidebar-menu-2{
     width: 100%;
     align-items: flex-start;
