@@ -53,7 +53,7 @@ a{
     background-color: rgb(9, 25, 49);
 }
 
-.active-link{
+.sidebar-menu-div.active{
     background-color: rgb(9, 25, 49);
     color: white;
 }

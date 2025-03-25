@@ -1,30 +1,39 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "./Sidebar.css"; 
 
 
 const Sidebar = () => {
+  const location = useLocation();
+
+  const getImageSrc = (path) => {
+    if (location.pathname === path) {
+      return `assets/img/${path.replace('/', '')}1.png`; 
+    }
+    return `assets/img/${path.replace('/', '')}.png`; 
+  };
+
     return (
       <div className="sidebar">
         <img className="sidebar-logo" src="/assets/img/logo_light.png" alt="Logo" />
         
         <div className="sidebar-menu">
-          <Link to="/summary" className="sidebar-menu-div summary-div">
+          <NavLink to="/summary" className="sidebar-menu-div summary-div" activeClassName="active-link">
             <img className="sidebar-icon" src="/assets/img/vector1.png" alt="Summary Icon" />
             <span>Summary</span>
-          </Link>
-          <Link to="/add-task" className="sidebar-menu-div add-task-div">
+          </NavLink>
+          <NavLink to="/add-task" className="sidebar-menu-div add-task-div" activeClassName="active-link">
             <img className="sidebar-icon" src="/assets/img/edit_square.png" alt="Add Task Icon" />
             <span>Add Task</span>
-          </Link>
-          <Link to="/board" className="sidebar-menu-div board-div">
+          </NavLink>
+          <NavLink to="/board" className="sidebar-menu-div board-div" activeClassName="active-link">
             <img className="sidebar-icon" src="/assets/img/Vector.png" alt="Board Icon" />
             <span>Board</span>
-          </Link>
-          <Link to="/contacts" className="sidebar-menu-div contacts-div">
+          </NavLink>
+          <NavLink to="/contacts" className="sidebar-menu-div contacts-div" activeClassName="active-link">
             <img className="sidebar-icon" src="/assets/img/perm_contact_calendar.png" alt="Contacts Icon" />
             <span>Contacts</span>
-          </Link>
+          </NavLink>
         </div>
   
         <div className="sidebar-menu-2">
