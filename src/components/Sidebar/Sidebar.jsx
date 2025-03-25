@@ -23,7 +23,7 @@ const Sidebar = () => {
             <span>Summary</span>
           </NavLink>
           <NavLink to="/add-task" className="sidebar-menu-div add-task-div" >
-            <img className="sidebar-icon" src={getImageSrc('add_task')} alt="Add Task Icon" />
+            <img className="sidebar-icon" src={getImageSrc('add-task')} alt="Add Task Icon" />
             <span>Add Task</span>
           </NavLink>
           <NavLink to="/board" className="sidebar-menu-div board-div" >
