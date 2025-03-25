@@ -14,12 +14,8 @@ const Board = () => {
     const handleSearch = (e) => setSearchQuery(e.target.value);
     const toggleAddTaskModal = () => setShowAddTaskModal(!showAddTaskModal);
 
-    const [tasksToDo, setTasksToDo] = useState([]);
-    const [tasksInProgress, setTasksInProgress] = useState([]);
-    const [tasksAwaiting, setTasksAwaiting] = useState([]);
-    const [tasksDone, setTasksDone] = useState([]);
-
     const [currentUser, setCurrentUser] = useState(null);
+    const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
         getCurrentUserData();
@@ -60,45 +56,16 @@ const Board = () => {
             }
 
             let data = await response.json();
-            if (!data || data.length === 0) {
-                clearTaskArrays();
-            } else {
-                sortTasks(Object.values(data));
-            }
+            setTasks(data);
         } catch (error) {
             console.error("Failed to fetch tasks:", error);
         }
     };
 
-    const clearTaskArrays = () => {
-        setTasksToDo([]);
-        setTasksInProgress([]);
-        setTasksAwaiting([]);
-        setTasksDone([]);
-    };
-
-    const sortTasks = (allTasks) => {
-        allTasks.forEach((task) => {
-            switch (task.status.toLowerCase()) {
-                case "todo":
-                    tasksToDo.push(task);
-                    break;
-                case "in_progress":
-                    tasksInProgress.push(task);
-                    break;
-                case "await_feedback":
-                    tasksAwaiting.push(task);
-                    break;
-                case "done":
-                    tasksDone.push(task);
-                    break;
-                default:
-                    console.log(`Unknown status: ${task.status}`);
-            }
-        });
-
-       
-    };
+    useEffect(() => {
+        console.log("Updated tasks state:", tasks);
+    }, [tasks]);
+    
 
     return(
     <main id="board-main">
@@ -130,8 +97,11 @@ const Board = () => {
         </div>
 
         <div className="board-columns-div">
-            {["To do", "In progress", "Await feedback", "Done"].map((status, index) => {
-            const statusKey = status.toLowerCase().replace(" ", "_");
+        {["To do", "In progress", "Await feedback", "Done"].map((status, index) => {
+            const statusKey = status === "To do" 
+                ? "todo" 
+                : status.toLowerCase().replace(/\s+/g, "_");
+                
             return (
                     <div className="board-column" key={index}>
                     <div className="board-column-header">
@@ -145,7 +115,13 @@ const Board = () => {
                         id={`board-${statusKey}-column`}
                         onDrop={() => console.log(`Move task to ${statusKey}`)}
                         onDragOver={(e) => e.preventDefault()}
-                    ></div>
+                    >
+                        {tasks.filter((task) => task.status === statusKey)
+                            .map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                        ))}
+                        
+                    </div>
                     </div>
                     );
                 })}
