@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import "./Board.css";
 import "../../index.css";
+import TaskCard from '../../components/TaskCard/TaskCard';
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
 
@@ -77,34 +78,26 @@ const Board = () => {
     };
 
     const sortTasks = (allTasks) => {
-        let todo = [];
-        let inProgress = [];
-        let awaiting = [];
-        let done = [];
-
         allTasks.forEach((task) => {
             switch (task.status.toLowerCase()) {
                 case "todo":
-                    todo.push(task);
+                    tasksToDo.push(task);
                     break;
                 case "in_progress":
-                    inProgress.push(task);
+                    tasksInProgress.push(task);
                     break;
                 case "await_feedback":
-                    awaiting.push(task);
+                    tasksAwaiting.push(task);
                     break;
                 case "done":
-                    done.push(task);
+                    tasksDone.push(task);
                     break;
                 default:
                     console.log(`Unknown status: ${task.status}`);
             }
         });
 
-        setTasksToDo(todo);
-        setTasksInProgress(inProgress);
-        setTasksAwaiting(awaiting);
-        setTasksDone(done);
+       
     };
 
     return(
