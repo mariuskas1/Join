@@ -3,7 +3,10 @@ import "./../../index.css";
 import "./TaskModal.css";
 
 
-const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEditTaskModal}) => {
+const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal, deleteTask, displayEditTaskModal}) => {
+
+    const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
+
 
 
     const renderPriority = (priority) => {
@@ -59,31 +62,65 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
         return null;
     }
 
+
     const renderSubtasks = (subtasks) => {
         if (!subtasks || subtasks.length === 0) {
             return <p> - </p>;
+        } else {
+            return (
+                <div id="large-task-subtasks-display">
+                    {subtasks.map((subtask) => (
+                        <div key={subtask.id} className="large-task-subtask-div">
+                            <img
+                                src={subtask.status === "done" ? "assets/img/checked.png" : "assets/img/notchecked.png"}
+                                className="subtask-checkbox"
+                                alt={subtask.status}
+                                onClick={() => switchSubtaskStatus(subtask.id)}
+                            />
+                            <span className="large-task-subtask-name">{subtask.title}</span>
+                        </div>
+                    ))}
+                </div>
+            );
         }
+    }
+
+
+    const switchSubtaskStatus = async (id) => {
+        const updatedTask = { ...task }; 
+        const subtask = updatedTask.subtasks.find((subtask) => subtask.id === id);
     
-        return (
-            <div id="large-task-subtasks-display">
-                {subtasks.map((subtask) => (
-                    <div key={subtask.id} className="large-task-subtask-div">
-                        <img
-                            src={subtask.status === "done" ? "assets/img/checked.png" : "assets/img/notchecked.png"}
-                            className="subtask-checkbox"
-                            alt={subtask.status}
-                            onClick={() => switchSubtaskStatus(subtask.id)}
-                        />
-                        <span className="large-task-subtask-name">{subtask.title}</span>
-                    </div>
-                ))}
-            </div>
-        );
+        if (subtask) {
+            subtask.status = subtask.status === 'todo' ? 'done' : 'todo';
+    
+            setTasks((prevTasks) =>
+                prevTasks.map((task) =>
+                    task.id === updatedTask.id ? updatedTask : task
+                )
+            );
+
+            await uploadEditedSubtask(subtask);
+        }
+    };
+    
+
+    const uploadEditedSubtask = async (subtask) => {
+        try {
+            await fetch(BASE_URL + "subtasks/" + subtask.id + '/', {
+                method: 'PUT',
+                headers:{
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${currentUser.token}`,
+                },
+                body: JSON.stringify(subtask)
+            })
+        } catch (error) {
+            console.error(error)
+        }
     }
 
-    const switchSubtaskStatus = (subtaskID) => {
 
-    }
+
 
     return(
 

@@ -150,7 +150,7 @@ const Board = () => {
                     >
                         {tasks.filter((task) => task.status === statusKey)
                             .map((task) => (
-                                <TaskCard key={task.id} task={task} contacts={contacts} openTaskModal={openTaskModal}/>
+                                <TaskCard key={task.id} task={task} contacts={contacts} openTaskModal={openTaskModal} />
                         ))}
                         
                     </div>
@@ -161,7 +161,7 @@ const Board = () => {
 
         {openedTask && (
             <div className='task-display-modal-bg' onClick={closeTaskModal}>
-                <TaskModal task={openedTask} contacts={contacts} onClose={closeTaskModal} />
+                <TaskModal task={openedTask} contacts={contacts} onClose={closeTaskModal} currentUser={currentUser} setTasks={setTasks} />
             </div>
         )}
 

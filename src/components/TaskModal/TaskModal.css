@@ -127,6 +127,7 @@
 }
 
 .subtask-checkbox{
+    border-radius: unset !important;
     margin-right: 16px;
 }
 
