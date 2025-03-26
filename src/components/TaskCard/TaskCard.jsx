@@ -5,7 +5,7 @@ import "./TaskCard.css";
 
 const TaskCard = ({ task, onDragStart, onClick }) => {
    
-    const taskCategoryHTML = task.category ? `<span class="task-category">${task.category}</span>` : "";
+   
     const subtasksHTML = task.subtasks ? (
         <div className="subtasks">
             {task.subtasks.map((subtask) => (
@@ -33,7 +33,13 @@ const TaskCard = ({ task, onDragStart, onClick }) => {
             onDragStart={() => onDragStart(task.id)}
             onClick={() => onClick(task.id)}
         >
-            {taskCategoryHTML}
+            {task.category === "User Story" && (
+                <span className="board-task-category-div" id="board-task-category-us">User Story</span>
+            )}
+            {task.category === "Technical Task" && (
+                <span className="board-task-category-div" id="board-task-category-tt">Technical Task</span>
+            )}
+            
             <span className="board-task-title">{task.title}</span>
             <span className="board-task-description">{task.description}</span>
             {subtasksHTML}
