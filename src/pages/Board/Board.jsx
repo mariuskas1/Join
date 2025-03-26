@@ -19,6 +19,7 @@ const Board = () => {
     const [tasks, setTasks] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [openedTask, setOpenedTask] = useState(null);
+    const [draggedTaskId, setDraggedTaskId] = useState(null);
 
     useEffect(() => {
         getCurrentUserData();
@@ -97,6 +98,41 @@ const Board = () => {
         setOpenedTask(null); 
     };
 
+    const startDragging = (id) => {
+        setDraggedTaskId(id);
+    }
+
+    const moveToColumn = (statusKey) => (event) => {
+        event.preventDefault(); 
+        moveTo(statusKey); 
+    };
+
+    const moveTo = async (status) => {
+        const task = tasks.find((task) => task.id === draggedTaskId);
+        if (task) {
+            task.status = status; 
+            const taskToSend = { ...task };  
+            delete taskToSend.subtasks;  
+            await editTaskOnMoving(taskToSend); 
+            setDraggedTaskId(null); 
+        }
+    }
+
+    const editTaskOnMoving = async (task) => {
+        try {
+            await fetch(BASE_URL + 'tasks/' + task.id + '/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${currentUser.token}`,
+                },
+                body: JSON.stringify(task),
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
        
 
     return(
@@ -145,12 +181,12 @@ const Board = () => {
                     <div
                         className="board-column-body"
                         id={`board-${statusKey}-column`}
-                        onDrop={() => console.log(`Move task to ${statusKey}`)}
+                        onDrop={moveToColumn(statusKey)}
                         onDragOver={(e) => e.preventDefault()}
                     >
                         {tasks.filter((task) => task.status === statusKey)
                             .map((task) => (
-                                <TaskCard key={task.id} task={task} contacts={contacts} openTaskModal={openTaskModal} />
+                                <TaskCard key={task.id} task={task} contacts={contacts} openTaskModal={openTaskModal} startDragging={startDragging} />
                         ))}
                         
                     </div>
