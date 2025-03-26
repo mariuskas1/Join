@@ -14,11 +14,17 @@ const TaskCard = ({ task, contacts, onDragStart, onClick }) => {
         </div>
     ) : null;
 
-    const taskPrioHTML = task.priority ? (
-        <div className="task-priority">
-            <span>{task.priority}</span>
-        </div>
-    ) : null;
+    const renderTaskPrioDisplay = (prio) => {
+        const prioImages = {
+            low: "assets/img/low.png",
+            medium: "assets/img/medium_orange.png",
+            urgent: "assets/img/urgent.png",
+        };
+    
+        return prioImages[prio] ? (
+            <img className="board-task-urgency" src={prioImages[prio]} alt={prio} />
+        ) : null;
+    };
 
     const renderTaskContacts = () => {
         let assignedContacts = [];
@@ -65,7 +71,7 @@ const TaskCard = ({ task, contacts, onDragStart, onClick }) => {
                 <div className="board-task-contacts-div">
                     {task.assignedTo && renderTaskContacts()}
                 </div>
-                {taskPrioHTML}
+                {task.prio && renderTaskPrioDisplay(task.prio)}
             </div>
         </div>
     );
