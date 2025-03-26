@@ -83,7 +83,9 @@
 .large-task-info-content{
     font-size: 19px;
     color: rgba(0, 0, 0, 1);
-    width: 50%;
+    width: 70%;
+    display: flex;
+    align-items: center;
 }
 
 .large-task-contacts-display{
@@ -176,4 +178,9 @@
 
 .board-task-category-tt{
     background-color: #0038FF !important;
+}
+
+
+.large-prio-icon{
+    margin-right: 8px;
 }

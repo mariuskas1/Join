@@ -7,13 +7,15 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
 
 
     const renderPriority = (priority) => {
+        console.log(priority);
+
         switch(priority) {
             case 'low':
-                return <img src="assets/img/low.png" alt="Low priority" />;
+                return <td class="large-task-info-content"> <img className="large-prio-icon" src="assets/img/low.png" alt="Low priority" />Low</td>;
             case 'medium':
-                return <img src="assets/img/medium_orange.png" alt="Medium priority" />;
+                return <td class="large-task-info-content"> <img className="large-prio-icon" src="assets/img/medium_orange.png" alt="Medium priority" />Medium</td> ;
             case 'urgent':
-                return <img src="assets/img/urgent.png" alt="Urgent priority" />;
+                return <td class="large-task-info-content"> <img className="large-prio-icon" src="assets/img/urgent.png" alt="Urgent priority" />Urgent</td>;
             default:
                 return null;
         }
@@ -84,7 +86,7 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
                     </tr>
                     <tr>
                         <td className="large-task-info-description">Priority:</td>
-                        <td>{renderPriority(task.priority)}</td>
+                        {renderPriority(task.prio)}
                     </tr>
                 </tbody>
             </table>
