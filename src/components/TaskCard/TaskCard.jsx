@@ -76,7 +76,7 @@ const TaskCard = ({ task, contacts, startDragging, openTaskModal }) => {
         <div
             className="board-task-div"
             draggable={true}
-            onDragStart={() => onDragStart(task.id)}
+            onDragStart={() => startDragging(task.id)}
             onClick={() => openTaskModal(task)}
         >
             {task.category === "User Story" && (

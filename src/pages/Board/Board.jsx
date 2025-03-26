@@ -89,6 +89,7 @@ const Board = () => {
     };
     
     const openTaskModal = (task) => {
+        console.log(task);
         setOpenedTask(task);
     };
 
@@ -153,7 +154,7 @@ const Board = () => {
                     >
                         {tasks.filter((task) => task.status === statusKey)
                             .map((task) => (
-                                <TaskCard key={task.id} task={task} contacts={contacts}/>
+                                <TaskCard key={task.id} task={task} contacts={contacts} openTaskModal={openTaskModal}/>
                         ))}
                         
                     </div>
@@ -163,7 +164,9 @@ const Board = () => {
                 </div>
 
         {openedTask && (
-            <TaskModal task={openedTask} onClose={closeTaskDisplayModal} />
+            <div className='task-display-modal-bg' onClick={closeTaskModal}>
+                <TaskModal task={openedTask} contacts={contacts} onClose={closeTaskModal} />
+            </div>
         )}
 
         {showAddTaskModal && (

@@ -1,7 +1,9 @@
 import React from 'react';
+import "./../../index.css";
+import "./TaskModal.css";
 
 
-const TaskModal = ({ task, hideTaskDisplayModal, deleteTask, displayEditTaskModal}) => {
+const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEditTaskModal}) => {
 
 
     const renderPriority = (priority) => {
@@ -18,12 +20,31 @@ const TaskModal = ({ task, hideTaskDisplayModal, deleteTask, displayEditTaskModa
     };
 
     
-    const renderAssignedContacts = (contacts) => {
-        return contacts.map((contact, index) => (
-            <div key={index} className="board-task-contact-logo" style={{ backgroundColor: contact.color }}>
-                {contact.initials}
-            </div>
-        ));
+    const renderAssignedContacts = () => {
+        let assignedContacts = [];
+        
+        if (typeof task.assignedTo === "string") {
+            assignedContacts = [task.assignedTo];
+        } else if (Array.isArray(task.assignedTo)) {
+            assignedContacts = task.assignedTo;
+        }
+    
+        return assignedContacts.map((contactName, index) => {
+            const assignedContactData = contacts.find(
+                (contact) => contact.name === contactName
+            );
+            
+           
+            return assignedContactData ? (
+                <div
+                    key={index}
+                    className="board-task-contact-logo"
+                    style={{ backgroundColor: assignedContactData.color }}
+                >
+                    {assignedContactData.initials}
+                </div>
+            ) : null; 
+        });
     };
 
     return(
