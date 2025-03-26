@@ -38,12 +38,14 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
             
            
             return assignedContactData ? (
-                <div
-                    key={index}
-                    className="board-task-contact-logo"
-                    style={{ backgroundColor: assignedContactData.color }}
-                >
-                    {assignedContactData.initials}
+                <div key={index} className="large-task-contact-div">
+                    <div
+                        className="large-task-contact-initials"
+                        style={{ backgroundColor: assignedContactData.color }}
+                    >
+                        {assignedContactData.initials}
+                    </div>
+                    <span className="large-task-contact-name">{assignedContactData.name}</span>
                 </div>
             ) : null; 
         });
