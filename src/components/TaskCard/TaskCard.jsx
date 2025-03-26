@@ -1,4 +1,7 @@
 import React from "react";
+import "./../../index.css";
+import "./TaskCard.css";
+
 
 const TaskCard = ({ task, onDragStart, onClick }) => {
    

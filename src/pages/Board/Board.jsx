@@ -101,7 +101,7 @@ const Board = () => {
             const statusKey = status === "To do" 
                 ? "todo" 
                 : status.toLowerCase().replace(/\s+/g, "_");
-                
+
             return (
                     <div className="board-column" key={index}>
                     <div className="board-column-header">
@@ -139,9 +139,9 @@ const Board = () => {
             </div>
         )}
 
-        <div className="task-added-modal" id="task-added-modal">
+        {/* <div className="task-added-modal" id="task-added-modal">
             Task added to board <img src="assets/img/board1.png" id="task-added-msg-img" alt="Board" />
-        </div>
+        </div> */}
         </main>
     );
 };
