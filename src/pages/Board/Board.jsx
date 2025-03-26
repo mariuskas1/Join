@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Board.css";
 import "../../index.css";
 import TaskCard from '../../components/TaskCard/TaskCard';
@@ -20,6 +20,10 @@ const Board = () => {
     const [contacts, setContacts] = useState([]);
     const [openedTask, setOpenedTask] = useState(null);
     const [draggedTaskId, setDraggedTaskId] = useState(null);
+
+    const [hoveredColumn, setHoveredColumn] = useState(null);
+    const columnRef = useRef({});
+
 
     useEffect(() => {
         getCurrentUserData();
@@ -104,8 +108,20 @@ const Board = () => {
 
     const moveToColumn = (statusKey) => (event) => {
         event.preventDefault(); 
+        removeHighlightForAllColumns();
         moveTo(statusKey); 
     };
+    
+
+    const removeHighlightForAllColumns = () => {
+        setHoveredColumn(null);
+
+        Object.keys(columnRef.current).forEach((key) => {
+            if (columnRef.current[key]) {
+                columnRef.current[key].classList.remove('drag-area-highlight');
+            }
+        });
+    } 
 
     const moveTo = async (status) => {
         const task = tasks.find((task) => task.id === draggedTaskId);
@@ -133,6 +149,26 @@ const Board = () => {
         }
     };
 
+    const allowDrop = (ev) => {
+        ev.preventDefault();
+    };
+
+    const highlight = (status) => {
+        setHoveredColumn(status);
+
+        if (columnRef.current[status]) {
+            columnRef.current[status].classList.add('drag-area-highlight');
+        }
+        
+    };
+
+    const removeHighlight = (status) => {
+        if (columnRef.current[status]) {
+            columnRef.current[status].classList.remove('drag-area-highlight');
+        }
+
+        setHoveredColumn(null);
+    };
        
 
     return(
@@ -180,9 +216,14 @@ const Board = () => {
                     </div>
                     <div
                         className="board-column-body"
+                        ref={(el) => columnRef.current[statusKey] = el}
                         id={`board-${statusKey}-column`}
                         onDrop={moveToColumn(statusKey)}
-                        onDragOver={(e) => e.preventDefault()}
+                        onDragOver={(e) => {
+                            allowDrop(e); 
+                            highlight(statusKey); 
+                        }}
+                        onDragLeave={() => removeHighlight(statusKey)}
                     >
                         {tasks.filter((task) => task.status === statusKey)
                             .map((task) => (
