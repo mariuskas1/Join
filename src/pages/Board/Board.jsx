@@ -63,7 +63,7 @@ const Board = () => {
             console.error("Failed to fetch tasks:", error);
         }
     };
-    
+
 
     const getAllContacts = async () => {
         try {
@@ -144,7 +144,7 @@ const Board = () => {
                     >
                         {tasks.filter((task) => task.status === statusKey)
                             .map((task) => (
-                                <TaskCard key={task.id} task={task} />
+                                <TaskCard key={task.id} task={task} contacts={contacts}/>
                         ))}
                         
                     </div>

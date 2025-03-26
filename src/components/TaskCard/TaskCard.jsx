@@ -3,7 +3,7 @@ import "./../../index.css";
 import "./TaskCard.css";
 
 
-const TaskCard = ({ task, onDragStart, onClick }) => {
+const TaskCard = ({ task, contacts, onDragStart, onClick }) => {
    
    
     const subtasksHTML = task.subtasks ? (
@@ -14,19 +14,34 @@ const TaskCard = ({ task, onDragStart, onClick }) => {
         </div>
     ) : null;
 
-    const taskContactsHTML = task.contacts ? (
-        <div className="contacts">
-            {task.contacts.map((contact, index) => (
-                <span key={index} className="task-contact">{contact}</span>
-            ))}
-        </div>
-    ) : null;
-
     const taskPrioHTML = task.priority ? (
         <div className="task-priority">
             <span>{task.priority}</span>
         </div>
     ) : null;
+
+    const renderTaskContacts = () => {
+        let assignedContacts = [];
+        if (typeof task.assignedTo === "string") {
+            assignedContacts = [task.assignedTo];
+        }
+    
+        return assignedContacts.map((contactName, index) => {
+            const assignedContactData = contacts.find(
+                (contact) => contact.name === contactName
+            );
+    
+            return assignedContactData ? (
+                <div
+                    key={index}
+                    className="board-task-contact-logo"
+                    style={{ backgroundColor: assignedContactData.color }}
+                >
+                    {assignedContactData.initials}
+                </div>
+            ) : null;
+        });
+    }
     
 
     return (
@@ -48,7 +63,7 @@ const TaskCard = ({ task, onDragStart, onClick }) => {
             {subtasksHTML}
             <div className="board-task-bottom-div">
                 <div className="board-task-contacts-div">
-                    {taskContactsHTML}
+                    {task.assignedTo && renderTaskContacts()}
                 </div>
                 {taskPrioHTML}
             </div>
