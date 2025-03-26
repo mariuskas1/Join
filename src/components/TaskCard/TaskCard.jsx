@@ -6,13 +6,35 @@ import "./TaskCard.css";
 const TaskCard = ({ task, contacts, onDragStart, onClick }) => {
    
    
-    const subtasksHTML = task.subtasks ? (
-        <div className="subtasks">
-            {task.subtasks.map((subtask) => (
-                <div key={subtask.id} className="subtask">{subtask.title}</div>
-            ))}
-        </div>
-    ) : null;
+    const renderSubtaskDisplay = (subtasks) => {
+        if (subtasks.length > 0) {
+            let subtasksArray = Object.values(subtasks); 
+            let allSubtasks = subtasksArray.length;
+            let subtasksDone = subtasksArray.filter(subtask => subtask.status === "done").length;
+            let subtasksDoneInPercent = (subtasksDone / allSubtasks) * 100;
+    
+            return getSubtaskProgressTemplate(subtasksDoneInPercent, subtasksDone, allSubtasks);
+        } else {
+            return null;
+        }
+    }
+
+    const getSubtaskProgressTemplate = (subtasksDoneInPercent, subtasksDone, allSubtasks) => {
+        return (
+            <div className="board-task-subtasks-display">
+                <div className="board-subtasks-bar-container">
+                    <div
+                        className="board-subtasks-bar"
+                        style={{ width: `${subtasksDoneInPercent}%` }} 
+                    ></div>
+                </div>
+                <span className="board-subtasks-display">
+                    {subtasksDone}/{allSubtasks} Subtasks
+                </span>
+            </div>
+        );
+    }
+    
 
     const renderTaskPrioDisplay = (prio) => {
         const prioImages = {
@@ -66,7 +88,7 @@ const TaskCard = ({ task, contacts, onDragStart, onClick }) => {
 
             <span className="board-task-title">{task.title}</span>
             <span className="board-task-description">{task.description}</span>
-            {subtasksHTML}
+            {renderSubtaskDisplay(task.subtasks)}
             <div className="board-task-bottom-div">
                 <div className="board-task-contacts-div">
                     {task.assignedTo && renderTaskContacts()}
