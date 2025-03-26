@@ -97,11 +97,7 @@ const Board = () => {
         setOpenedTask(null); 
     };
 
-
-    useEffect(() => {
-        console.log("Updated tasks state:", tasks);
-    }, [tasks]);
-    
+       
 
     return(
     <main id="board-main">

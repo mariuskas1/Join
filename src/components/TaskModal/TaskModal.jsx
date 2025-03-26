@@ -7,8 +7,6 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
 
 
     const renderPriority = (priority) => {
-        console.log(priority);
-
         switch(priority) {
             case 'low':
                 return <td class="large-task-info-content"> <img className="large-prio-icon" src="assets/img/low.png" alt="Low priority" />Low</td>;
@@ -61,6 +59,32 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
         return null;
     }
 
+    const renderSubtasks = (subtasks) => {
+        if (!subtasks || subtasks.length === 0) {
+            return <p> - </p>;
+        }
+    
+        return (
+            <div id="large-task-subtasks-display">
+                {subtasks.map((subtask) => (
+                    <div key={subtask.id} className="large-task-subtask-div">
+                        <img
+                            src={subtask.status === "done" ? "assets/img/checked.png" : "assets/img/notchecked.png"}
+                            className="subtask-checkbox"
+                            alt={subtask.status}
+                            onClick={() => switchSubtaskStatus(subtask.id)}
+                        />
+                        <span className="large-task-subtask-name">{subtask.title}</span>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+    const switchSubtaskStatus = (subtaskID) => {
+
+    }
+
     return(
 
         <div 
@@ -100,16 +124,7 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
 
             <span className="large-task-info-description" id="large-task-subtasks-header">Subtasks</span>
             <div className="large-task-subtasks-display" id="large-task-subtasks-display">
-                {/* Render subtasks here */}
-                {task.subtasks && task.subtasks.length > 0 ? (
-                    task.subtasks.map((subtask, index) => (
-                        <div key={index} className="subtask">
-                            {subtask.title}
-                        </div>
-                    ))
-                ) : (
-                    <div>No subtasks</div>
-                )}
+                {renderSubtasks(task.subtasks)}
             </div>
 
             <div className="large-task-display-footer">
