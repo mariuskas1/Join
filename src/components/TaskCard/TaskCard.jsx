@@ -13,6 +13,7 @@ const TaskCard = ({ task, onDragStart, onClick }) => {
             ))}
         </div>
     ) : null;
+
     const taskContactsHTML = task.contacts ? (
         <div className="contacts">
             {task.contacts.map((contact, index) => (
@@ -20,11 +21,13 @@ const TaskCard = ({ task, onDragStart, onClick }) => {
             ))}
         </div>
     ) : null;
+
     const taskPrioHTML = task.priority ? (
         <div className="task-priority">
             <span>{task.priority}</span>
         </div>
     ) : null;
+    
 
     return (
         <div
@@ -39,7 +42,7 @@ const TaskCard = ({ task, onDragStart, onClick }) => {
             {task.category === "Technical Task" && (
                 <span className="board-task-category-div" id="board-task-category-tt">Technical Task</span>
             )}
-            
+
             <span className="board-task-title">{task.title}</span>
             <span className="board-task-description">{task.description}</span>
             {subtasksHTML}

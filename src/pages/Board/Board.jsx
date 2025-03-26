@@ -4,7 +4,7 @@ import "./Board.css";
 import "../../index.css";
 import TaskCard from '../../components/TaskCard/TaskCard';
 
-const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
+const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
 
 const Board = () => {
@@ -16,6 +16,7 @@ const Board = () => {
 
     const [currentUser, setCurrentUser] = useState(null);
     const [tasks, setTasks] = useState([]);
+    const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
         getCurrentUserData();
@@ -24,6 +25,7 @@ const Board = () => {
     useEffect(() => {
         if (currentUser) {
             getAllTasks();
+            getAllContacts();
         }
     }, [currentUser]);
 
@@ -43,7 +45,7 @@ const Board = () => {
         }
 
         try {
-            let response = await fetch(BASE_URL, {
+            let response = await fetch(BASE_URL + "tasks/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -61,6 +63,30 @@ const Board = () => {
             console.error("Failed to fetch tasks:", error);
         }
     };
+    
+
+    const getAllContacts = async () => {
+        try {
+            const response = await fetch(BASE_URL + "contacts/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Token ${currentUser.token}`,
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setContacts(data); 
+            } else {
+                console.error("Failed to fetch contacts");
+            }
+        } catch (error) {
+            console.error("Error loading contacts:", error);
+        }
+    };
+    
+
 
     useEffect(() => {
         console.log("Updated tasks state:", tasks);
