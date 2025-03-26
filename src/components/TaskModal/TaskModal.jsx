@@ -47,6 +47,16 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
         });
     };
 
+    const renderTaskCategory = () => {
+        if (task.category === "User Story") {
+            return <div className="large-task-category board-task-category-us">User Story</div>;
+        }
+        if (task.category === "Technical Task") {
+            return <div className="large-task-category board-task-category-tt">Technical Task</div>;
+        }
+        return null;
+    }
+
     return(
 
         <div 
@@ -55,8 +65,7 @@ const TaskModal = ({ task, contacts, hideTaskDisplayModal, deleteTask, displayEd
             id="tdl-modal"
         >
             <div className="large-task-display-header">
-                {/* You can replace 'taskCategoryHTML' with actual logic here */}
-                <div className="task-category">{task.category}</div>
+                {renderTaskCategory()}
                 <img 
                     src="assets/img/close.png" 
                     className="large-task-close-icon" 

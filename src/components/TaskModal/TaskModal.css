@@ -170,3 +170,10 @@
     filter: brightness(0) saturate(100%) invert(56%) sepia(91%) saturate(1445%) hue-rotate(165deg) brightness(95%) contrast(85%);
 }
 
+.board-task-category-us{
+    background-color: #1FD7C1;
+}
+
+.board-task-category-tt{
+    background-color: #0038FF !important;
+}
