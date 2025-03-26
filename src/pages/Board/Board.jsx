@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./Board.css";
 import "../../index.css";
 import TaskCard from '../../components/TaskCard/TaskCard';
+import TaskModal from '../../components/TaskModal/TaskModal';
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
@@ -17,6 +18,7 @@ const Board = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [contacts, setContacts] = useState([]);
+    const [openedTask, setOpenedTask] = useState(null);
 
     useEffect(() => {
         getCurrentUserData();
@@ -86,6 +88,13 @@ const Board = () => {
         }
     };
     
+    const openTaskModal = (task) => {
+        setOpenedTask(task);
+    };
+
+    const closeTaskModal = () => {
+        setOpenedTask(null); 
+    };
 
 
     useEffect(() => {
@@ -152,6 +161,10 @@ const Board = () => {
                     );
                 })}
                 </div>
+
+        {openedTask && (
+            <TaskModal task={openedTask} onClose={closeTaskDisplayModal} />
+        )}
 
         {showAddTaskModal && (
             <div className="add-task-modal-bg" onClick={toggleAddTaskModal}>

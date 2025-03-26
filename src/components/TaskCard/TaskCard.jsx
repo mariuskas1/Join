@@ -3,7 +3,7 @@ import "./../../index.css";
 import "./TaskCard.css";
 
 
-const TaskCard = ({ task, contacts, onDragStart, onClick }) => {
+const TaskCard = ({ task, contacts, startDragging, openTaskModal }) => {
    
    
     const renderSubtaskDisplay = (subtasks) => {
@@ -77,7 +77,7 @@ const TaskCard = ({ task, contacts, onDragStart, onClick }) => {
             className="board-task-div"
             draggable={true}
             onDragStart={() => onDragStart(task.id)}
-            onClick={() => onClick(task.id)}
+            onClick={() => openTaskModal(task)}
         >
             {task.category === "User Story" && (
                 <span className="board-task-category-div" id="board-task-category-us">User Story</span>
