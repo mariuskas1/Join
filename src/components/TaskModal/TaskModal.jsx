@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 
 
-const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal, deleteTask, displayEditTaskModal, isOpen}) => {
+const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask, displayEditTaskModal, isOpen}) => {
 
     const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
@@ -130,7 +130,7 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal
             initial={{ x: "300%" }} // Start off-screen
             animate={{ x: isOpen ? "0%" : "300%"}} // Slide in/out
             exit={{ x: "300%"}} // Exit animation
-            transition={{ duration: 0.2, ease: "easeInOut" }} // Smooth transition
+            transition={{ duration: 0.15, ease: "easeInOut" }} // Smooth transition
             className="task-display-large tdl-modal"
             onClick={(event) => event.stopPropagation()}
         >
@@ -139,7 +139,7 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal
                 <img 
                     src="assets/img/close.png" 
                     className="large-task-close-icon" 
-                    onClick={hideTaskDisplayModal}
+                    onClick={onClose}
                     alt="Close"
                 />
             </div>

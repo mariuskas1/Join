@@ -106,7 +106,7 @@ const Board = () => {
         setTaskModalOpen(false);
         setTimeout(() => {
             setOpenedTask(null); 
-        }, 500);
+        }, 300);
         
     };
 
