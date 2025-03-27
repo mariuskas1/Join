@@ -1,9 +1,11 @@
 import React from 'react';
 import "./../../index.css";
 import "./TaskModal.css";
+import { motion } from "framer-motion";
 
 
-const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal, deleteTask, displayEditTaskModal}) => {
+
+const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal, deleteTask, displayEditTaskModal, isOpen}) => {
 
     const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
@@ -124,10 +126,13 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal
 
     return(
 
-        <div 
-            className="task-display-large" 
-            onClick={(event) => event.stopPropagation()} 
-            id="tdl-modal"
+        <motion.div
+            initial={{ x: "300%" }} // Start off-screen
+            animate={{ x: isOpen ? "0%" : "300%"}} // Slide in/out
+            exit={{ x: "300%"}} // Exit animation
+            transition={{ duration: 0.2, ease: "easeInOut" }} // Smooth transition
+            className="task-display-large tdl-modal"
+            onClick={(event) => event.stopPropagation()}
         >
             <div className="large-task-display-header">
                 {renderTaskCategory()}
@@ -181,7 +186,7 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, hideTaskDisplayModal
                     Edit
                 </button>
             </div>
-        </div>
+        </motion.div>
 
     );
 };

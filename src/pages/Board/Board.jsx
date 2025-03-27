@@ -4,6 +4,8 @@ import "./Board.css";
 import "../../index.css";
 import TaskCard from '../../components/TaskCard/TaskCard';
 import TaskModal from '../../components/TaskModal/TaskModal';
+import { AnimatePresence } from "framer-motion";
+
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
@@ -11,6 +13,7 @@ const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/
 const Board = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+    const [showTaskModal, setTaskModalOpen] = useState(false);
 
     const handleSearch = (e) => setSearchQuery(e.target.value);
     const toggleAddTaskModal = () => setShowAddTaskModal(!showAddTaskModal);
@@ -96,10 +99,15 @@ const Board = () => {
     const openTaskModal = (task) => {
         console.log(task);
         setOpenedTask(task);
+        setTaskModalOpen(true);
     };
 
     const closeTaskModal = () => {
-        setOpenedTask(null); 
+        setTaskModalOpen(false);
+        setTimeout(() => {
+            setOpenedTask(null); 
+        }, 500);
+        
     };
 
     const startDragging = (id) => {
@@ -236,11 +244,22 @@ const Board = () => {
                 })}
                 </div>
 
-        {openedTask && (
-            <div className='task-display-modal-bg' onClick={closeTaskModal}>
-                <TaskModal task={openedTask} contacts={contacts} onClose={closeTaskModal} currentUser={currentUser} setTasks={setTasks} />
-            </div>
-        )}
+                {openedTask && (
+                    <div className="task-display-modal-bg" onClick={closeTaskModal}>
+                        <AnimatePresence>
+                            {showTaskModal && ( 
+                                <TaskModal
+                                    task={openedTask}
+                                    contacts={contacts}
+                                    onClose={closeTaskModal}
+                                    currentUser={currentUser}
+                                    setTasks={setTasks}
+                                    isOpen={showTaskModal}
+                                />
+                            )}
+                        </AnimatePresence>
+                    </div>
+                )}
 
         {showAddTaskModal && (
             <div className="add-task-modal-bg" onClick={toggleAddTaskModal}>

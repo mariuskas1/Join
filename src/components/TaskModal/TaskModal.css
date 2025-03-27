@@ -11,14 +11,14 @@
     z-index: 300;
 }
 
-/* #tdl-modal{
+/* .tdl-modal{
     transform: translateX(300%);
     transition: transform 150ms ease;
-} */
-
-#tdl-modal.show{
-    transform: translateX(0);
 }
+
+.tdl-modal.show{
+    transform: translateX(0);
+} */
 
 .large-task-display-header{
     display: flex;
