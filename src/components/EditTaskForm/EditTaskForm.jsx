@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./../../index.css";
 import "../../pages/Board/Board.css";
 import "./EditTaskForm.css";
@@ -8,13 +8,61 @@ import "./EditTaskForm.css";
 
 const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
 
+    const [title, setTitle] = useState(task.title);
+    const [description, setDescription] = useState(task.description);
+    const [date, setDate] = useState(task.date);
+    const [priority, setPriority] = useState(task.prio);
+    const [assignedTo, setAssignedTo] = useState(task.assignedTo);
+    const [subtasks, setSubtasks] = useState(task.subtasks);
+
+    useEffect(() => {
+        setTitle(task.title);
+        setDescription(task.description);
+        setDate(task.date);
+        setPriority(task.prio);
+        setAssignedTo(task.assignedTo);
+        setSubtasks(task.subtasks);
+    }, [task]);
+
     const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
     
-    const editTask = () => {
 
+    const editTask = async (event) => {
+        event.preventDefault();
+        const taskToSend = { 
+            id: task.id, 
+            title, 
+            description, 
+            date, 
+            prio: priority, 
+            assignedTo,
+            status: task.status,
+            category: task.category
+        };
+        await editRequest(taskToSend); 
+        hideForm();
+    };
+
+    const editRequest = async (taskToSend) => {
+        try {
+            await fetch(BASE_URL + 'tasks/' + task.id + '/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${currentUser.token}`,
+                },
+                body: JSON.stringify(taskToSend),
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const editSubtask = () => {
+
+    }
+
+    const handleSubtaskChange = () => {
 
     }
 
@@ -25,8 +73,6 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
     const addSubtask = () => {
 
     }
-
-
 
 
 
@@ -49,7 +95,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                 type="text"
                                 className="edit-task-input"
                                 id="edit-title"
-                                value={task.title}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                                 spellCheck="false"
                                 required
                             />
@@ -58,7 +105,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                             <label htmlFor="description">Description</label>
                             <textarea
                                 id="edit-description"
-                                value={task.description}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
                                 spellCheck="false"
                             />
                         </div>
@@ -68,7 +116,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                 type="date"
                                 className="edit-task-input"
                                 id="edit-date"
-                                value={task.date}
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
                                 required
                                 min="2010-01-01"
                                 max="2100-12-31"
@@ -83,7 +132,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                         id="urgent"
                                         name="prio-edit"
                                         value="urgent"
-                                        checked={task.prio === "urgent"}
+                                        checked={priority === "urgent"}
+                                        onChange={() => setPriority("urgent")}
                                     />
                                     <div className="radio-tile" id="urgent-tile">
                                         <label htmlFor="urgent">Urgent</label>
@@ -96,7 +146,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                         id="medium"
                                         name="prio-edit"
                                         value="medium"
-                                        checked={task.prio === "medium"}
+                                        checked={priority === "medium"}
+                                        onChange={() => setPriority("medium")}
                                     />
                                     <div className="radio-tile" id="medium-tile">
                                         <label htmlFor="medium">Medium</label>
@@ -109,7 +160,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                         id="low"
                                         name="prio-edit"
                                         value="low"
-                                        checked={task.prio === "low"}
+                                        checked={priority === "low"}
+                                        onChange={() => setPriority("low")}
                                     />
                                     <div className="radio-tile" id="low-tile">
                                         <label htmlFor="low">Low</label>
@@ -122,7 +174,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                             <label htmlFor="assigned">Assigned to</label>
                             <select
                                 id="edit-assigned"
-                                value={task.assignedTo}
+                                value={assignedTo}
+                                onChange={(e) => setAssignedTo(e.target.value)}
                             >
                                 <option value="" disabled>Select contacts to assign</option>
                                 {/* Dynamically populate options */}
@@ -149,7 +202,7 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                 />
                             </div>
                             <ul id="edit-task-subtasks-list">
-                                {task.subtasks.map((subtask, index) => (
+                                {subtasks.map((subtask, index) => (
                                     <li key={index}>
                                         <img className="bullet-point" src="assets/img/circle-solid.svg" alt="Bullet point" />
                                         <input 
@@ -157,6 +210,7 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                             className="subtask-input bg-white" 
                                             name="subtask-input" 
                                             value={subtask.title} 
+                                            onChange={(e) => handleSubtaskChange(index, e.target.value)}
                                             disabled
                                             spellCheck="false"
                                         />

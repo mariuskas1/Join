@@ -103,7 +103,6 @@ const Board = () => {
     };
     
     const openTaskModal = (task) => {
-        console.log(task);
         setOpenedTask(task);
         setTaskModalOpen(true);
     };
