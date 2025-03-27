@@ -11,6 +11,22 @@
     box-sizing: border-box;
   }
 
+  #portal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    z-index: 200;
+}
+
+#portal:empty{
+    display: none;
+}
 
 main{
     position: fixed;

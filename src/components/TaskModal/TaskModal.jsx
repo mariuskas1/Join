@@ -4,6 +4,7 @@ import "./../../index.css";
 import "./TaskModal.css";
 import { motion } from "framer-motion";
 import EditTaskForm from '../EditTaskForm/EditTaskForm';
+import ReactDOM from 'react-dom';
 
 
 
@@ -123,73 +124,86 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask,
         }
     }
 
+
     
 
 
-    return(
-
-        <motion.div
-            initial={{ x: "300%" }} // Start off-screen
-            animate={{ x: isOpen ? "0%" : "300%"}} // Slide in/out
-            exit={{ x: "300%"}} // Exit animation
-            transition={{ duration: 0.15, ease: "easeInOut" }} // Smooth transition
-            className="task-display-large tdl-modal"
-            onClick={(event) => event.stopPropagation()}
-        >
-            <div className="large-task-display-header">
-                {renderTaskCategory()}
-                <img 
-                    src="assets/img/close.png" 
-                    className="large-task-close-icon" 
-                    onClick={onClose}
-                    alt="Close"
-                />
-            </div>
-            <span className="large-task-title">{task.title}</span>
-            <span className="large-task-description">{task.description}</span>
-            
-            <table className="large-task-info-table">
-                <tbody>
-                    <tr>
-                        <td className="large-task-info-description">Due date:</td>
-                        <td className="large-task-info-content">{task.date}</td>
-                    </tr>
-                    <tr>
-                        <td className="large-task-info-description">Priority:</td>
-                        {renderPriority(task.prio)}
-                    </tr>
-                </tbody>
-            </table>
-
-            <span className="large-task-info-description">Assigned To:</span>
-            <div className="large-task-contacts-display">
-                {renderAssignedContacts(task.assignedTo)}
-            </div>
-
-            <span className="large-task-info-description" id="large-task-subtasks-header">Subtasks</span>
-            <div className="large-task-subtasks-display" id="large-task-subtasks-display">
-                {renderSubtasks(task.subtasks)}
-            </div>
-
-            <div className="large-task-display-footer">
-                <button 
-                    className="large-task-button" 
-                    onClick={() => deleteTask(task.id)}
-                >
-                    <img className="task-footer-btn-icon" src="assets/img/delete.png" alt="Delete" />
-                    Delete
-                </button>
-                <div className="large-task-btn-seperator"></div>
-                <button 
-                    className="large-task-button" 
-                    onClick={() => setEditTask(true)}
-                >
-                    <img className="task-footer-btn-icon" src="assets/img/edit.png" alt="Edit" />
-                    Edit
-                </button>
-            </div>
-        </motion.div>
-
+    return ReactDOM.createPortal(
+        <>
+            {/* Background Overlay */}
+            <div className="task-display-modal-bg" onClick={onClose}></div>
+    
+            {/* Modal Content */}
+            <motion.div
+                initial={{ x: "300%" }} // Start off-screen
+                animate={{ x: isOpen ? "0%" : "300%" }} // Slide in/out
+                exit={{ x: "300%" }} // Exit animation
+                transition={{ duration: 0.15, ease: "easeInOut" }} // Smooth transition
+                className="task-display-large tdl-modal"
+                onClick={(event) => event.stopPropagation()} // Prevent background click from closing modal
+            >
+                {showEditForm ? (
+                    <EditTaskForm task={task} hideForm={() => setEditTask(false)} />
+                ) : (
+                    <>
+                        <div className="large-task-display-header">
+                            {renderTaskCategory()}
+                            <img 
+                                src="assets/img/close.png" 
+                                className="large-task-close-icon" 
+                                onClick={onClose}
+                                alt="Close"
+                            />
+                        </div>
+    
+                        <span className="large-task-title">{task.title}</span>
+                        <span className="large-task-description">{task.description}</span>
+    
+                        <table className="large-task-info-table">
+                            <tbody>
+                                <tr>
+                                    <td className="large-task-info-description">Due date:</td>
+                                    <td className="large-task-info-content">{task.date}</td>
+                                </tr>
+                                <tr>
+                                    <td className="large-task-info-description">Priority:</td>
+                                    {renderPriority(task.prio)}
+                                </tr>
+                            </tbody>
+                        </table>
+    
+                        <span className="large-task-info-description">Assigned To:</span>
+                        <div className="large-task-contacts-display">
+                            {renderAssignedContacts(task.assignedTo)}
+                        </div>
+    
+                        <span className="large-task-info-description" id="large-task-subtasks-header">Subtasks</span>
+                        <div className="large-task-subtasks-display" id="large-task-subtasks-display">
+                            {renderSubtasks(task.subtasks)}
+                        </div>
+    
+                        <div className="large-task-display-footer">
+                            <button 
+                                className="large-task-button" 
+                                onClick={() => deleteTask(task.id)}
+                            >
+                                <img className="task-footer-btn-icon" src="assets/img/delete.png" alt="Delete" />
+                                Delete
+                            </button>
+                            <div className="large-task-btn-seperator"></div>
+                            <button 
+                                className="large-task-button" 
+                                onClick={() => setEditTask(true)}
+                            >
+                                <img className="task-footer-btn-icon" src="assets/img/edit.png" alt="Edit" />
+                                Edit
+                            </button>
+                        </div>
+                    </>
+                )}
+            </motion.div>
+        </>,
+        document.getElementById('portal')
     );
 };
 

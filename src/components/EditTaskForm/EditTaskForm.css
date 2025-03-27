@@ -1,0 +1,114 @@
+.edit-task-div{
+    background-color: white;
+    z-index: 30;
+}
+
+.edit-task-display-header{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    margin-top: 8px;
+}
+
+.edit-task-modal-footer{
+    display: flex;
+    justify-content: flex-end;
+    
+    margin-bottom: 16px;
+}
+
+.edit-task-btn{
+    font-size: 21px;
+    font-weight: 700;
+    width: 80px;
+    height: 49px;
+    color: white;
+    background-color: rgba(42, 54, 71, 1);
+    border: unset;
+    border-radius: 12px;
+}
+
+.edit-task-btn:hover{
+    cursor: pointer;
+    background-color: rgba(41, 171, 226, 1);
+}
+
+.task-display-large .input{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+
+.edit-task-input{
+    height: 41px;
+    font-size: 18px;
+    width: 95%;
+    border-radius: 12px;
+    border: 1px solid lightgrey;
+    padding: 8px;
+}
+
+.task-display-large #edit-description{
+    font-size: 18px;
+    width: 95%;
+    border-radius: 12px;
+    border: 1px solid lightgrey;
+    padding: 8px;
+}
+
+.task-display-large select{
+    font-size: 18px;
+    width: 95%;
+    border-radius: 12px;
+    border: 1px solid lightgrey;
+    padding: 8px;
+}
+
+.task-display-large .subtask-input-container{
+    font-size: 21px;
+    width: 95%;
+    border-radius: 12px;
+    border: 1px solid lightgrey;
+    padding: 8px;
+}
+
+.task-display-large label{
+    margin-top: 16px;
+}
+
+.edit-task-assigned-contacts-display{
+    display: flex;
+}
+
+.edit-task-contact-logo{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid white;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    
+}
+
+
+#edit-task-subtasks-list{
+    margin-top: 4px;
+    width: 100%;
+    padding: 0;
+}
+
+#edit-task-subtasks-list li{
+    display: flex ;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 8px 2px 32px;
+    width: 100%;
+    transition: all 125ms ease;
+    border-radius: 8px;
+}

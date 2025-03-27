@@ -8,17 +8,10 @@
     box-sizing: border-box;
     padding: 32px;
     overflow-y: auto;
-    z-index: 300;
+    z-index: 999;
+    
 }
 
-/* .tdl-modal{
-    transform: translateX(300%);
-    transition: transform 150ms ease;
-}
-
-.tdl-modal.show{
-    transform: translateX(0);
-} */
 
 .large-task-display-header{
     display: flex;

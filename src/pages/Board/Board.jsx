@@ -186,6 +186,7 @@ const Board = () => {
        
 
     return(
+        
     <main id="board-main">
         <div className="board-main-header">
             <h1>Board</h1>
@@ -259,7 +260,7 @@ const Board = () => {
                 </div>
 
                 {openedTask && (
-                    <div className="task-display-modal-bg" onClick={closeTaskModal}>
+                    
                         <AnimatePresence>
                             {showTaskModal && ( 
                                 <TaskModal
@@ -272,8 +273,10 @@ const Board = () => {
                                 />
                             )}
                         </AnimatePresence>
-                    </div>
+                    
                 )}
+
+                
 
         {showAddTaskModal && (
             <div className="add-task-modal-bg" onClick={toggleAddTaskModal}>
