@@ -233,11 +233,19 @@ const Board = () => {
                         }}
                         onDragLeave={() => removeHighlight(statusKey)}
                     >
-                        {tasks.filter((task) => task.status === statusKey)
-                            .map((task) => (
-                                <TaskCard key={task.id} task={task} contacts={contacts} openTaskModal={openTaskModal} startDragging={startDragging} />
-                        ))}
-                        
+                        {tasks.filter((task) => task.status === statusKey).length > 0 ? (
+                            tasks.filter((task) => task.status === statusKey).map((task) => (
+                                <TaskCard 
+                                    key={task.id} 
+                                    task={task} 
+                                    contacts={contacts} 
+                                    openTaskModal={openTaskModal} 
+                                    startDragging={startDragging} 
+                                />
+                            ))
+                        ) : (
+                            <div className="no-tasks-div">No tasks {statusKey}</div>
+                        )}    
                     </div>
                     </div>
                     );
