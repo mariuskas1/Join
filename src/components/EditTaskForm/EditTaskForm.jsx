@@ -29,6 +29,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
 
     const editTask = async (event) => {
         event.preventDefault();
+        updateTaskObject();
+        
         const taskToSend = { 
             id: task.id, 
             title, 
@@ -42,6 +44,15 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
         await editRequest(taskToSend); 
         hideForm();
     };
+
+    const updateTaskObject = () => {
+        task.title = title;
+        task.description = description;
+        task.date = date;
+        task.prio = priority;
+        task.assignedTo = assignedTo;
+
+    }
 
     const editRequest = async (taskToSend) => {
         try {
