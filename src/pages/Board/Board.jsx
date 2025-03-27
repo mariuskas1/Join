@@ -27,6 +27,12 @@ const Board = () => {
     const [hoveredColumn, setHoveredColumn] = useState(null);
     const columnRef = useRef({});
 
+    const statusLabels = {
+        todo: "To do",
+        in_progress: "In Progress",
+        awaiting_feedback: "Awaiting Feedback",
+        done: "Done"
+    };
 
     useEffect(() => {
         getCurrentUserData();
@@ -244,7 +250,7 @@ const Board = () => {
                                 />
                             ))
                         ) : (
-                            <div className="no-tasks-div">No tasks {statusKey}</div>
+                            <div className="no-tasks-div">No tasks {statusLabels[statusKey]}</div>
                         )}    
                     </div>
                     </div>
