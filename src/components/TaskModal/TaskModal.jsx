@@ -1,14 +1,16 @@
 import React from 'react';
+import { useState } from 'react';
 import "./../../index.css";
 import "./TaskModal.css";
 import { motion } from "framer-motion";
+import EditTaskForm from '../EditTaskForm/EditTaskForm';
 
 
 
-const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask, displayEditTaskModal, isOpen}) => {
+const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask, isOpen}) => {
 
     const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
-
+    const [showEditForm, setEditTask] = useState(false); 
 
 
     const renderPriority = (priority) => {
@@ -121,7 +123,7 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask,
         }
     }
 
-
+    
 
 
     return(
@@ -180,7 +182,7 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask,
                 <div className="large-task-btn-seperator"></div>
                 <button 
                     className="large-task-button" 
-                    onClick={() => displayEditTaskModal(task.id)}
+                    onClick={() => setEditTask(true)}
                 >
                     <img className="task-footer-btn-icon" src="assets/img/edit.png" alt="Edit" />
                     Edit
