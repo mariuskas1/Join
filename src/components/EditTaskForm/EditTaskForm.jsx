@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import "./../../index.css";
 import "../../pages/Board/Board.css";
 import "./EditTaskForm.css";
@@ -14,6 +14,13 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
     const [priority, setPriority] = useState(task.prio);
     const [assignedTo, setAssignedTo] = useState(task.assignedTo);
     const [subtasks, setSubtasks] = useState(task.subtasks);
+    const [newSubtask, setNewSubtask] = useState({
+        title: '',
+        status: 'todo',
+        task: task.id
+    });
+    const [editingIndex, setEditingIndex] = useState(null);
+    const inputRef = useRef(null);
 
     useEffect(() => {
         setTitle(task.title);
@@ -25,6 +32,55 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
     }, [task]);
 
     const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
+    
+    useEffect(() => {
+        if (editingIndex !== null && inputRef.current) {
+          inputRef.current.focus();
+        }
+        console.log(subtasks)
+      }, [editingIndex]);
+    
+      const handleAddSubtaskChange = (event) => {
+        setNewSubtask((prev) => ({
+            ...prev,
+            title: event.target.value
+        }));
+      };
+    
+      const handleSubtaskKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          addSubtask();
+        }
+      };
+    
+      const addSubtask = () => {
+        if (newSubtask.title.trim() !== '') {
+            setSubtasks([...subtasks, newSubtask]);
+            console.log(newSubtask);
+    
+            // Reset newSubtask while keeping default values
+            setNewSubtask({
+                title: '',
+                status: 'todo',
+                task: task.id
+            });
+        }
+      };
+    
+      const handleSubtaskChange = (index, event) => {
+        const updatedSubtasks = [...subtasks];
+        updatedSubtasks[index] = event.target.value;
+        setSubtasks(updatedSubtasks);
+      };
+    
+      const handleSubtaskBlur = () => {
+        setEditingIndex(null);
+      };
+    
+      const deleteSubtask = (index) => {
+        setSubtasks(subtasks.filter((_, i) => i !== index));
+      };
     
 
     const editTask = async (event) => {
@@ -67,22 +123,6 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
         } catch (error) {
             console.error(error);
         }
-    }
-
-    const editSubtask = () => {
-
-    }
-
-    const handleSubtaskChange = () => {
-
-    }
-
-    const deleteSubtask = () => {
-
-    }
-
-    const addSubtask = () => {
-
     }
 
 
@@ -203,6 +243,9 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                     name="subtasks"
                                     id="subtasks-edit"
                                     placeholder="Add new subtask"
+                                    value={newSubtask.title}
+                                    onChange={handleAddSubtaskChange}
+                                    onKeyDown={handleSubtaskKeyDown}
                                     spellCheck="false"
                                 />
                                 <img
@@ -217,25 +260,28 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                     <li key={index}>
                                         <img className="bullet-point" src="assets/img/circle-solid.svg" alt="Bullet point" />
                                         <input 
+                                            ref={editingIndex === index ? inputRef : null}
                                             type="text" 
                                             className="subtask-input bg-white" 
                                             name="subtask-input" 
                                             value={subtask.title} 
-                                            onChange={(e) => handleSubtaskChange(index, e.target.value)}
-                                            disabled
+                                            onChange={(event) => handleSubtaskChange(index, event)}
+                                            onBlur={handleSubtaskBlur}
+                                            disabled={editingIndex !== index}
+                                            autoFocus={editingIndex === index}
                                             spellCheck="false"
                                         />
                                         <div className="subtask-icons">
                                             <img 
                                                 className="subtask-icon" 
                                                 src="assets/img/edit.png" 
-                                                onClick={editSubtask}
+                                                onClick={() => setEditingIndex(index)}
                                                 alt="Edit"
                                             />
                                             <img 
                                                 className="subtask-icon" 
                                                 src="assets/img/delete.png" 
-                                                onClick={deleteSubtask}
+                                                onClick={() => deleteSubtask(index)}
                                                 alt="Delete"
                                             />
                                         </div>
