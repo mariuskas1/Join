@@ -65,8 +65,8 @@ const TaskForm = ({ contacts }) => {
     setEditingIndex(null); // Exit edit mode when input loses focus
   };
 
-  const deleteSubtask = () => {
-
+  const deleteSubtask = (index) => {
+    setSubtasks(subtasks.filter((_, i) => i !== index));
   }
 
   const uploadNewTask = async (event) => {
