@@ -167,7 +167,9 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                     }
                 })
             );
-            updateSubtasksOnServerAndUI(newSubtasks);
+            if (newSubtasks.length > 0) {
+                await updateSubtasksOnServerAndUI(newSubtasks);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -178,9 +180,8 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
             await addNewSubtasks(newSubtasks);
         }
 
-        const updatedSubtasks = [...subtasks, ...newSubtasks];
-        setSubtasks(updatedSubtasks);
-        task.subtasks = updatedSubtasks;
+        setSubtasks(prevSubtasks => [...prevSubtasks, ...newSubtasks]);
+        task.subtasks = [...task.subtasks, ...newSubtasks];
     }
 
 
