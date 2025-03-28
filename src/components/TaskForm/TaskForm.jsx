@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./../../index.css";
 import "./TaskForm.css";
 
@@ -13,8 +13,16 @@ const TaskForm = ({ contacts }) => {
   const [category, setCategory] = useState('');
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtask, setNewSubtask] = useState('');
+  const [editingIndex, setEditingIndex] = useState(null);
+  const inputRef = useRef(null);
 
-  const handleSubtaskChange = (event) => {
+  useEffect(() => {
+    if (editingIndex !== null && inputRef.current) {
+      inputRef.current.focus(); 
+    }
+  }, [editingIndex]); 
+
+  const handleAddSubtaskChange = (event) => {
     setNewSubtask(event.target.value);
   };
 
@@ -42,6 +50,24 @@ const TaskForm = ({ contacts }) => {
     setSubtasks([]);
     setNewSubtask('');
   };
+
+  const editSubtask = (index) => {
+    setEditingIndex(index);
+  }
+
+  const handleSubtaskChange = (index, event) => {
+    const updatedSubtasks = [...subtasks];
+    updatedSubtasks[index] = event.target.value; // Update the specific subtask
+    setSubtasks(updatedSubtasks);
+  };
+
+  const handleSubtaskBlur = () => {
+    setEditingIndex(null); // Exit edit mode when input loses focus
+  };
+
+  const deleteSubtask = () => {
+
+  }
 
   const uploadNewTask = async (event) => {
     event.preventDefault();
@@ -194,7 +220,7 @@ const TaskForm = ({ contacts }) => {
               id="subtasks"
               placeholder="Add new subtask"
               value={newSubtask}
-              onChange={handleSubtaskChange}
+              onChange={handleAddSubtaskChange}
               onKeyDown={handleSubtaskKeyDown}
               spellCheck="false"
             />
@@ -207,7 +233,35 @@ const TaskForm = ({ contacts }) => {
           </div>
           <ul id="subtasks-list">
             {subtasks.map((subtask, index) => (
-              <li key={index}>{subtask}</li>
+              <li key={index}>
+              <img className="bullet-point" src="assets/img/circle-solid.svg" alt="bullet point" />
+              <input 
+                ref={editingIndex === index ? inputRef : null}
+                type="text" 
+                className="subtask-input" 
+                name="subtask-input" 
+                value={subtask} 
+                onChange={(event) => handleSubtaskChange(index, event)}
+                onBlur={handleSubtaskBlur}
+                disabled={editingIndex !== index}
+                autoFocus={editingIndex === index}
+                spellCheck="false" 
+              />
+              <div className="subtask-icons">
+                <img 
+                  className="subtask-icon" 
+                  src="assets/img/edit.png" 
+                  alt="Edit" 
+                  onClick={() => editSubtask(index)} 
+                />
+                <img 
+                  className="subtask-icon" 
+                  src="assets/img/delete.png" 
+                  alt="Delete" 
+                  onClick={() => deleteSubtask(index)} 
+                />
+              </div>
+            </li>
             ))}
           </ul>
         </div>
