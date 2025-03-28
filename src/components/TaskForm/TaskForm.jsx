@@ -1,15 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "./../../index.css";
 import "./TaskForm.css";
+import { postData } from '../../services/apiService';
 
 
 
-const TaskForm = ({ contacts }) => {
-    const [title, setTitle] = useState('');
+const TaskForm = ({ contacts, currentUserData }) => {
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
   const [date, setDate] = useState('');
-  const [priority, setPriority] = useState('medium');
+  const [prio, setPriority] = useState('medium');
   const [category, setCategory] = useState('');
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtask, setNewSubtask] = useState('');
@@ -57,33 +58,94 @@ const TaskForm = ({ contacts }) => {
 
   const handleSubtaskChange = (index, event) => {
     const updatedSubtasks = [...subtasks];
-    updatedSubtasks[index] = event.target.value; // Update the specific subtask
+    updatedSubtasks[index] = event.target.value; 
     setSubtasks(updatedSubtasks);
   };
 
   const handleSubtaskBlur = () => {
-    setEditingIndex(null); // Exit edit mode when input loses focus
+    setEditingIndex(null);
   };
 
   const deleteSubtask = (index) => {
     setSubtasks(subtasks.filter((_, i) => i !== index));
   }
 
+
   const uploadNewTask = async (event) => {
     event.preventDefault();
-    const taskToSend = {
-      title,
-      description,
-      assignedTo,
-      date,
-      priority,
-      category,
-      subtasks,
-    };
-    // Send the taskToSend to the server or do further processing
-    console.log('Task to be sent:', taskToSend);
-    clearForm();
+    let newTask = createNewTask();
+    if (!newTask) {
+      return; 
+    }
+
+    try {
+      console.log('New Task:', newTask);
+      const uploadedTask = await postData("tasks/", newTask, currentUserData.token);
+      await uploadSubtasks(uploadedTask.id);
+      displayAddedConfirmationMessage();
+
+      
+      clearForm();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const createNewTask = () => {
+    if(title && date && category){
+      const taskToSend = {
+        title,
+        description,
+        assignedTo,
+        date,
+        prio,
+        category,
+        status: "todo"
+      };
+      hideRequiredLabels();
+      return taskToSend;
+    } else {
+      displayValidationMsg(title.value && date.value && category.value);
+      return null;
+    }
+  }
+
+
+  const uploadSubtasks = async (taskId) => {
+    for (const subtask of subtasks) {
+      const subtaskData = {
+        title: subtask,
+        status: "todo",
+        task: taskId, 
+      };
+      await postData("subtasks/", subtaskData, currentUserData.token);
+    }
+  }
+
+
+  const displayValidationMsg = (title, date, category) => {
+    if (!title) {
+      document.getElementById("title-label-2").style.opacity = 1;
+    }
+    if (!date) {
+      document.getElementById("date-label-2").style.opacity = 1;
+    }
+    if (!category) {
+      document.getElementById("category-label-2").style.opacity = 1;
+    }
+  }
+
+  const hideRequiredLabels = () => {
+    document.getElementById("title-label-2").style.opacity = 0;
+    document.getElementById("date-label-2").style.opacity = 0;
+    document.getElementById("category-label-2").style.opacity = 0;
+  }
+
+  const displayAddedConfirmationMessage = () => {
+
+  }
+
+
 
 
   return (
@@ -122,9 +184,9 @@ const TaskForm = ({ contacts }) => {
             value={assignedTo}
             onChange={(e) => setAssignedTo(e.target.value)}
           >
-            <option value="" disabled selected>Select contacts to assign</option>
+            <option value="" disabled >Select contacts to assign</option>
             {contacts.map((contact) => (
-              <option key={contact.id} value={contact.id}>
+              <option key={contact.id} value={contact.name}>
                 {contact.name}
               </option>
             ))}
@@ -158,7 +220,7 @@ const TaskForm = ({ contacts }) => {
                 id="urgent"
                 name="prio"
                 value="urgent"
-                checked={priority === 'urgent'}
+                checked={prio === 'urgent'}
                 onChange={() => setPriority('urgent')}
               />
               <div className="radio-tile" id="urgent-tile">
@@ -172,7 +234,7 @@ const TaskForm = ({ contacts }) => {
                 id="medium"
                 name="prio"
                 value="medium"
-                checked={priority === 'medium'}
+                checked={prio === 'medium'}
                 onChange={() => setPriority('medium')}
               />
               <div className="radio-tile" id="medium-tile">
@@ -186,7 +248,7 @@ const TaskForm = ({ contacts }) => {
                 id="low"
                 name="prio"
                 value="low"
-                checked={priority === 'low'}
+                checked={prio === 'low'}
                 onChange={() => setPriority('low')}
               />
               <div className="radio-tile" id="low-tile">

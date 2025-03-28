@@ -36,7 +36,7 @@ const AddTask = () => {
     return(
         <main>
             <h1>Add Task</h1>
-            <TaskForm contacts={contacts}></TaskForm>
+            <TaskForm contacts={contacts} currentUserData={currentUser}></TaskForm>
         </main>
     )
 
