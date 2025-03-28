@@ -147,7 +147,7 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask,
                 onClick={(event) => event.stopPropagation()} // Prevent background click from closing modal
             >
                 {showEditForm ? (
-                    <EditTaskForm task={task} hideForm={hideModal} currentUser={currentUser} />
+                    <EditTaskForm task={task} hideForm={hideModal} currentUser={currentUser} contacts={contacts}/>
                 ) : (
                     <>
                         <div className="large-task-display-header">

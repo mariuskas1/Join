@@ -22,6 +22,11 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
     const [editingIndex, setEditingIndex] = useState(null);
     const inputRef = useRef(null);
 
+    const assignedContactData = contacts && contacts.length > 0
+        ? contacts.find(contact => contact.name === assignedTo)
+        : null;
+
+
     useEffect(() => {
         setTitle(task.title);
         setDescription(task.description);
@@ -37,7 +42,6 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
         if (editingIndex !== null && inputRef.current) {
           inputRef.current.focus();
         }
-        console.log(subtasks);
     }, [editingIndex]);
     
     const handleAddSubtaskChange = (event) => {
@@ -307,13 +311,25 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                 value={assignedTo}
                                 onChange={(e) => setAssignedTo(e.target.value)}
                             >
-                                <option value="" disabled>Select contacts to assign</option>
-                                {/* Dynamically populate options */}
+                                {contacts && contacts.length > 0 ? (
+                                    contacts.map((contact) => (
+                                        <option key={contact.id} value={contact.name}>
+                                            {contact.name}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option disabled>No contacts available</option> // Placeholder when contacts are not available
+                                )}
                             </select>
                         </div>
-                        <div className="edit-task-assigned-contacts-display" id="edit-task-assigned-contacts-display">
-                            {/* Render assigned contacts */}
-                        </div>
+                        {assignedContactData && (
+                            <div
+                                className="edit-task-contact-logo"
+                                style={{ backgroundColor: assignedContactData.color }}
+                            >
+                                {assignedContactData.initials}
+                            </div>
+                        )}
                         <div className="input" id="subtasks-input">
                             <label htmlFor="subtasks">Subtasks</label>
                             <div className="subtask-input-container">
