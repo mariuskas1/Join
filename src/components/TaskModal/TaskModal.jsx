@@ -134,17 +134,15 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask,
 
     return ReactDOM.createPortal(
         <>
-            {/* Background Overlay */}
             <div className="task-display-modal-bg" onClick={onClose}></div>
     
-            {/* Modal Content */}
             <motion.div
-                initial={{ x: "300%" }} // Start off-screen
-                animate={{ x: isOpen ? "0%" : "300%" }} // Slide in/out
-                exit={{ x: "300%" }} // Exit animation
-                transition={{ duration: 0.15, ease: "easeInOut" }} // Smooth transition
+                initial={{ x: "300%" }} 
+                animate={{ x: isOpen ? "0%" : "300%" }} 
+                exit={{ x: "300%" }} 
+                transition={{ duration: 0.15, ease: "easeInOut" }} 
                 className="task-display-large tdl-modal"
-                onClick={(event) => event.stopPropagation()} // Prevent background click from closing modal
+                onClick={(event) => event.stopPropagation()} 
             >
                 {showEditForm ? (
                     <EditTaskForm task={task} hideForm={hideModal} currentUser={currentUser} contacts={contacts}/>

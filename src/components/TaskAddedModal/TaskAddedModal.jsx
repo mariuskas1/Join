@@ -9,10 +9,10 @@ const TaskAddedModal = ({ isOpen }) => {
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    initial={{ y: '400%' }} // Start off-screen to the bottom
-                    animate={{ y: 0 }} // Slide in from the bottom
-                    exit={{ y: '400%' }} // Slide out to the bottom
-                    transition={{ duration: 0.15, ease: 'easeInOut' }} // Smooth transition
+                    initial={{ y: '400%' }} 
+                    animate={{ y: 0 }} 
+                    exit={{ y: '400%' }} 
+                    transition={{ duration: 0.15, ease: 'easeInOut' }} 
                     className="task-added-modal"
                     id="task-added-modal"
                 >

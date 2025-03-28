@@ -36,7 +36,6 @@ const AddTask = () => {
 
 
     const handleTaskAdded = () => {
-        console.log('task added')
         setIsModalOpen(true);
         setTimeout(() => {
             setIsModalOpen(false);
