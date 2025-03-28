@@ -26,7 +26,7 @@ export async function getAllContacts(token) {
 
 export async function postData(url, data = {}, token) {
     try {
-      const response = await fetch(BASE_URL1 + url, {
+      const response = await fetch(BASE_URL + url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

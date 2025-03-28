@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Summary.css";
 import "../../index.css";
+import { getCurrentUserData } from "../../services/apiService";
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
 
@@ -20,12 +21,12 @@ const Summary = () => {
         awaitingFeedback: 0,
     });
 
-    // Fetch current user data
     useEffect(() => {
-        getCurrentUserData();
+            const userData = getCurrentUserData();
+            setCurrentUser(userData);
     }, []);
+       
 
-    // Fetch tasks when the component mounts
     useEffect(() => {
         if (currentUser) {
             getAllTasks();
@@ -38,14 +39,7 @@ const Summary = () => {
         }
     }, [currentUser]);
 
-    const getCurrentUserData = () => {
-        let currentUserLocalStorage = localStorage.getItem("currentUser");
-        if (currentUserLocalStorage) {
-            setCurrentUser(JSON.parse(currentUserLocalStorage));
-        } else {
-            setCurrentUser(null);
-        }
-    }
+    
 
     const getAllTasks = async () => {
         try {

@@ -5,6 +5,8 @@ import "../../index.css";
 import TaskCard from '../../components/TaskCard/TaskCard';
 import TaskModal from '../../components/TaskModal/TaskModal';
 import { AnimatePresence } from "framer-motion";
+import { getCurrentUserData } from '../../services/apiService';
+import { getAllContacts } from '../../services/apiService';
 
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
@@ -35,24 +37,32 @@ const Board = () => {
     };
 
     useEffect(() => {
-        getCurrentUserData();
+            const userData = getCurrentUserData();
+            setCurrentUser(userData);
     }, []);
+    
+    useEffect(() => {
+        const fetchContacts = async () => {
+            if (currentUser && currentUser.token) {
+                try {
+                  const contactsData = await getAllContacts(currentUser.token);
+                  setContacts(contactsData);
+                } catch (err) {
+                  console.error(err);
+                } 
+              }
+        };
+        fetchContacts();
+    }, [currentUser]);
+    
 
     useEffect(() => {
         if (currentUser) {
             getAllTasks();
-            getAllContacts();
         }
     }, [currentUser]);
 
-    const getCurrentUserData = () => {
-        let currentUserLocalStorage = localStorage.getItem("currentUser");
-        if (currentUserLocalStorage) {
-            setCurrentUser(JSON.parse(currentUserLocalStorage));
-        } else {
-            setCurrentUser(null);
-        }
-    }
+    
 
     const getAllTasks = async () => {
         if (!currentUser) {
@@ -81,26 +91,7 @@ const Board = () => {
     };
 
 
-    const getAllContacts = async () => {
-        try {
-            const response = await fetch(BASE_URL + "contacts/", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${currentUser.token}`,
-                },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setContacts(data); 
-            } else {
-                console.error("Failed to fetch contacts");
-            }
-        } catch (error) {
-            console.error("Error loading contacts:", error);
-        }
-    };
+    
     
     const openTaskModal = (task) => {
         setOpenedTask(task);
