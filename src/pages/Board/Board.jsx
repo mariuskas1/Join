@@ -90,6 +90,27 @@ const Board = () => {
         }
     };
 
+    const deleteTask = async (id) => {
+        try {
+            const response = await fetch(BASE_URL + 'tasks/' + id + '/', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${currentUser.token}`, 
+                },
+            });
+
+            if (response.ok) {
+                setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
+                closeTaskModal();
+            } else {
+                console.error('Failed to delete task:', response.statusText);
+            }   
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
     
     
@@ -260,6 +281,7 @@ const Board = () => {
                                     currentUser={currentUser}
                                     setTasks={setTasks}
                                     isOpen={showTaskModal}
+                                    deleteTask={deleteTask}
                                 />
                             )}
                         </AnimatePresence>
