@@ -37,50 +37,71 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
         if (editingIndex !== null && inputRef.current) {
           inputRef.current.focus();
         }
-        console.log(subtasks)
-      }, [editingIndex]);
+        console.log(subtasks);
+    }, [editingIndex]);
     
-      const handleAddSubtaskChange = (event) => {
+    const handleAddSubtaskChange = (event) => {
         setNewSubtask((prev) => ({
             ...prev,
             title: event.target.value
         }));
-      };
+    };
     
-      const handleSubtaskKeyDown = (event) => {
+    const handleSubtaskKeyDown = (event) => {
         if (event.key === 'Enter') {
           event.preventDefault();
           addSubtask();
         }
-      };
+    };
     
-      const addSubtask = () => {
+    const addSubtask = () => {
         if (newSubtask.title.trim() !== '') {
-            setSubtasks([...subtasks, newSubtask]);
-            console.log(newSubtask);
-    
-            // Reset newSubtask while keeping default values
+            setSubtasks([...subtasks, newSubtask]);    
             setNewSubtask({
                 title: '',
                 status: 'todo',
                 task: task.id
             });
         }
-      };
+    };
     
-      const handleSubtaskChange = (index, event) => {
+    const handleSubtaskChange = (index, event) => {
         const updatedSubtasks = [...subtasks];
         updatedSubtasks[index] = event.target.value;
         setSubtasks(updatedSubtasks);
-      };
+    };
     
-      const handleSubtaskBlur = () => {
+    const handleSubtaskBlur = () => {
         setEditingIndex(null);
-      };
+    };
     
-      const deleteSubtask = (index) => {
-        setSubtasks(subtasks.filter((_, i) => i !== index));
-      };
+    const deleteSubtask = async (index) => {
+        const subtaskToDelete = subtasks[index];
+        if (subtaskToDelete.id) {
+            await deleteSubtaskFromServer(subtaskToDelete.id);
+            const updatedSubtasks = subtasks.filter((_, i) => i !== index);
+            setSubtasks(updatedSubtasks);
+            task.subtasks = updatedSubtasks;
+        } else {
+            const updatedSubtasks = subtasks.filter((_, i) => i !== index);
+            setSubtasks(updatedSubtasks);
+            task.subtasks = updatedSubtasks;
+        }
+    };
+
+    const deleteSubtaskFromServer = async (id) => {
+        try {
+            await fetch(BASE_URL + `subtasks/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${currentUser.token}`,
+                },
+            });
+        } catch (error) {
+            console.error("Error deleting subtask:", error);
+        }
+    }
     
 
     const editTask = async (event) => {
@@ -98,6 +119,7 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
             category: task.category
         };
         await editRequest(taskToSend); 
+        await editSubtasks();
         hideForm();
     };
 
@@ -124,6 +146,62 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
             console.error(error);
         }
     }
+
+    const editSubtasks = async () => {
+        const newSubtasks = [];
+        try {
+            await Promise.all(
+                subtasks.map(subtask => {
+                    if (subtask.id) {
+                        return fetch(BASE_URL + `subtasks/${subtask.id}/`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Token ${currentUser.token}`,
+                            },
+                            body: JSON.stringify(subtask),
+                        });
+                    } else {
+                        newSubtasks.push(subtask);
+                        return Promise.resolve(); 
+                    }
+                })
+            );
+            updateSubtasksOnServerAndUI(newSubtasks);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const updateSubtasksOnServerAndUI = async (newSubtasks) => {
+        if (newSubtasks.length > 0) {
+            await addNewSubtasks(newSubtasks);
+        }
+
+        const updatedSubtasks = [...subtasks, ...newSubtasks];
+        setSubtasks(updatedSubtasks);
+        task.subtasks = updatedSubtasks;
+    }
+
+
+    const addNewSubtasks = async (newSubtasks) => {
+        try {
+            await Promise.all(
+                newSubtasks.map(subtask =>
+                    fetch(BASE_URL + `subtasks/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Token ${currentUser.token}`,
+                        },
+                        body: JSON.stringify(subtask), 
+                    })
+                )
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
 
 
