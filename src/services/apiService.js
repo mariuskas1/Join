@@ -2,7 +2,29 @@ const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/
 
 
 
-async function postData(url, data = {}, token) {
+
+export const getCurrentUserData = () => {
+    const currentUserLocalStorage = localStorage.getItem("currentUser");
+    return currentUserLocalStorage ? JSON.parse(currentUserLocalStorage) : null;
+}
+
+
+export async function getAllContacts(token) {
+    try {
+      const response = await fetch(`${BASE_URL}/contacts/`, {
+        method: "GET",
+        headers: { Authorization: `Token ${token}` },
+      });
+      if (!response.ok) throw new Error("Failed to fetch contacts");
+      return await response.json(); 
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+      throw error; 
+    }
+  }
+
+
+export async function postData(url, data = {}, token) {
     try {
       const response = await fetch(BASE_URL1 + url, {
         method: "POST",
@@ -24,4 +46,4 @@ async function postData(url, data = {}, token) {
     }
   }
   
-  export { postData };
+  
