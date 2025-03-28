@@ -1,0 +1,21 @@
+.task-added-modal {
+    width: 326px;
+    height: 74px;
+    background: rgba(42, 54, 71, 1);
+    border: none;
+    color: white;
+    font-weight: 400;
+    font-size: 21px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 20%;
+    right: 50%;
+}
+
+#task-added-msg-img{
+    margin-left: 8px;
+    border-radius: 0;
+}

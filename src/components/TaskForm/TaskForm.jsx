@@ -5,7 +5,7 @@ import { postData } from '../../services/apiService';
 
 
 
-const TaskForm = ({ contacts, currentUserData }) => {
+const TaskForm = ({ contacts, currentUserData, onTaskAdded }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
@@ -79,12 +79,10 @@ const TaskForm = ({ contacts, currentUserData }) => {
     }
 
     try {
-      console.log('New Task:', newTask);
       const uploadedTask = await postData("tasks/", newTask, currentUserData.token);
       await uploadSubtasks(uploadedTask.id);
-      displayAddedConfirmationMessage();
-
-      
+      displayAddedConfirmationMessage(); 
+      onTaskAdded();
       clearForm();
     } catch (error) {
       console.error(error);

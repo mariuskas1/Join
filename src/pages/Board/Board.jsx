@@ -271,7 +271,6 @@ const Board = () => {
                 </div>
 
                 {openedTask && (
-                    
                         <AnimatePresence>
                             {showTaskModal && ( 
                                 <TaskModal
