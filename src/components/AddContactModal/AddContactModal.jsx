@@ -22,9 +22,9 @@ const AddContactModal = ({ isOpen, onClose }) => {
     return createPortal(
         <div className="add-contact-modal-bg" onClick={onClose}>
           <motion.div
-            initial={{ x: "300%" }}
-            animate={{ x: isOpen ? "0%" : "300%" }}
-            exit={{ x: "300%" }}
+            initial={{ x: "200%" }}
+            animate={{ x: isOpen ? "0%" : "200%" }}
+            exit={{ x: "200%" }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="add-contact-modal"
             onClick={(e) => e.stopPropagation()}

@@ -5,6 +5,7 @@ import { getCurrentUserData, getAllContacts } from '../../services/apiService';
 import ActiveContactModal from '../../components/ActiveContactModal/ActiveContactModal';
 import { AnimatePresence } from 'framer-motion';
 import AddContactModal from '../../components/AddContactModal/AddContactModal';
+import EditContactModal from '../../components/EditContactModal/EditContactModal';
 
 
 const Contacts = () => {
@@ -170,6 +171,17 @@ const Contacts = () => {
               <AddContactModal 
                 isOpen={showAddContactModal} 
                 onClose={() => setShowAddContactModal(false)} 
+              />
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {showEditContactModal && (
+              <EditContactModal 
+                isOpen={showEditContactModal} 
+                contact={activeContact} 
+                onClose={() => setShowEditContactModal(false)} 
+                onDelete={deleteContact}
               />
             )}
           </AnimatePresence>
