@@ -15,14 +15,9 @@
 .add-contact-modal{
     height: 592px;
     width: 1212px;
-    display: flex;
-    transform: translateX(200%);
-    transition: all 400ms ease;
+    display: flex; 
 }
 
-.add-contact-modal.show{
-    transform: translateX(0);
-}
 
 .add-contact-modal-left{
     height: 100%;

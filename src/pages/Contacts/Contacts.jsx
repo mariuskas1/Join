@@ -4,6 +4,7 @@ import "../../index.css";
 import { getCurrentUserData, getAllContacts } from '../../services/apiService';
 import ActiveContactModal from '../../components/ActiveContactModal/ActiveContactModal';
 import { AnimatePresence } from 'framer-motion';
+import AddContactModal from '../../components/AddContactModal/AddContactModal';
 
 
 const Contacts = () => {
@@ -164,7 +165,17 @@ const Contacts = () => {
               <img src="assets/img/person_add.png" id="mobileContactOptionsBtn" alt="Add Contact" />
           </button>
     
+          <AnimatePresence>
+            {showAddContactModal && (
+              <AddContactModal 
+                isOpen={showAddContactModal} 
+                onClose={() => setShowAddContactModal(false)} 
+              />
+            )}
+          </AnimatePresence>
         </div>
+
+        
       );
 }
 
