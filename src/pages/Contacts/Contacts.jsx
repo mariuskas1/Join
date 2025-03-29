@@ -22,6 +22,9 @@ const Contacts = () => {
       setCurrentUser(userData);
     }, []);
 
+    useEffect(() => {
+      console.log("Updated activeContact:", activeContact);
+    }, [activeContact]);
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -137,7 +140,7 @@ const Contacts = () => {
               />
 
               <div className="contact-display-body" id="single-contact-display-div">
-                  {/* This section will be dynamically populated with selected contact details */}
+                {activeContact && <ActiveContactModal contact={activeContact} />  }
               </div>
 
               <div className="user-menu-bg d-none" id="scd-options-menu">
