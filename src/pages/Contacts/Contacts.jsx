@@ -2,17 +2,20 @@ import React, { useEffect, useState } from 'react';
 import "./Contacts.css";
 import "../../index.css";
 import { getCurrentUserData, getAllContacts } from '../../services/apiService';
+import ActiveContactModal from '../../components/ActiveContactModal/ActiveContactModal';
 
 
 const Contacts = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [contacts, setContacts] = useState([]);
     const [groupedContacts, setGroupedContacts] = useState({});
+    const [activeContact, setActiveContact] = useState(null);
+
 
     const [showAddContactModal, setShowAddContactModal] = useState(false);
     const [showEditContactModal, setShowEditContactModal] = useState(false);
     const [showContactDetails, setShowContactDetails] = useState(false);
-    const [selectedContact, setSelectedContact] = useState(null);
+
       
     useEffect(() => {
       const userData = getCurrentUserData();
@@ -69,7 +72,8 @@ const Contacts = () => {
 
     function getContactItemTemplate(contact) {
       return (
-          <div className="contacts-display-small" key={contact.id} onClick={() => activateContact(contact)}>
+          <div className={`contacts-display-small ${activeContact && activeContact.id === contact.id ? "active-contact-sm" : ""}`} 
+                key={contact.id} onClick={() => activateContact(contact)}>
               <div className="initials-div" style={{ backgroundColor: contact.color }}>
                   {contact.initials}
               </div>
@@ -81,8 +85,8 @@ const Contacts = () => {
       );
     }
 
-    const activateContact = () => {
-      
+    const activateContact = (contact) => {
+      setActiveContact(contact);
     }
 
     

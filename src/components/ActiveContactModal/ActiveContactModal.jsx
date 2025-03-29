@@ -1,6 +1,6 @@
 import React from "react";
 import "./../../index.css";
-import "./ActiveContact.css";
+import "./ActiveContactModal.css";
 import "../../pages/Contacts/Contacts.css";
 
 
