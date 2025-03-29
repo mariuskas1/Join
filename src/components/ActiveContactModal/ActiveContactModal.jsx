@@ -2,11 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import "./../../index.css";
 import "./ActiveContactModal.css";
+import "../../pages/Contacts/Contacts.css";
 
 
 
 const ActiveContactModal = ({ contact, onEdit, onDelete, isOpen }) => {
-
+    
     return (
         <motion.div
             initial={{ x: "300%" }}

@@ -96,32 +96,26 @@ const Contacts = () => {
       } else {
         setActiveContact(contact); 
       }
-        
     };
 
     
 
-    const displayAddContactModal = () => {
-
-    }
+    
     const handleHideContactDetails = () => {
 
     }
     const handleEditContact = () => {
 
     }
-    const handleDeleteContact = () => {
+    const deleteContact = () => {
 
-    }
-    const handleAddContact = () => {
-        
     }
 
 
       return (
         <div className="main-contacts">
           <div className="contacts-display-div">
-            <button className="add-contact-btn" id="add-contact-btn" onClick={displayAddContactModal}>
+            <button className="add-contact-btn" id="add-contact-btn" onClick={setShowAddContactModal}>
               Add new contact <img src="assets/img/person_add.png" className="add-contact-icon" />
             </button>
             <div id="contacts-display-bar">
@@ -149,7 +143,7 @@ const Contacts = () => {
               <div className="contact-display-body" id="single-contact-display-div">
                 <AnimatePresence>
                   {activeContact && 
-                      <ActiveContactModal contact={activeContact} isOpen={showActiveContact}/>
+                    <ActiveContactModal contact={activeContact} isOpen={showActiveContact} onDelete={deleteContact} onEdit={setShowEditContactModal} />
                   }
                 </AnimatePresence>
               </div>
@@ -159,14 +153,14 @@ const Contacts = () => {
                       <button className="scd-option-btn" onClick={handleEditContact}>
                           <img src="assets/img/edit.png" alt="Edit" /> Edit
                       </button>
-                      <button className="scd-option-btn" onClick={handleDeleteContact}>
+                      <button className="scd-option-btn" onClick={deleteContact}>
                           <img src="assets/img/delete.png" alt="Delete" /> Delete
                       </button>
                   </div>
               </div>
           </div>
 
-          <button className="add-contact-btn-mobile" id="addContactBtnMobile" onClick={handleAddContact}>
+          <button className="add-contact-btn-mobile" id="addContactBtnMobile" onClick={setShowAddContactModal}>
               <img src="assets/img/person_add.png" id="mobileContactOptionsBtn" alt="Add Contact" />
           </button>
     
