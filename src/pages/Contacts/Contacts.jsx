@@ -3,14 +3,17 @@ import "./Contacts.css";
 import "../../index.css";
 import { getCurrentUserData, getAllContacts } from '../../services/apiService';
 import ActiveContactModal from '../../components/ActiveContactModal/ActiveContactModal';
+import { AnimatePresence } from 'framer-motion';
 
 
 const Contacts = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [contacts, setContacts] = useState([]);
     const [groupedContacts, setGroupedContacts] = useState({});
-    const [activeContact, setActiveContact] = useState(null);
 
+    const [exitingContact, setExitingContact] = useState(null);
+    const [activeContact, setActiveContact] = useState(null);
+    const showActiveContact = Boolean(activeContact);
 
     const [showAddContactModal, setShowAddContactModal] = useState(false);
     const [showEditContactModal, setShowEditContactModal] = useState(false);
@@ -22,9 +25,7 @@ const Contacts = () => {
       setCurrentUser(userData);
     }, []);
 
-    useEffect(() => {
-      console.log("Updated activeContact:", activeContact);
-    }, [activeContact]);
+    
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -89,8 +90,17 @@ const Contacts = () => {
     }
 
     const activateContact = (contact) => {
-      setActiveContact(contact);
-    }
+      if (activeContact) {
+        setExitingContact(activeContact); // Track old contact for exit animation
+        setActiveContact(null); // Hide current contact
+        setTimeout(() => {
+          setExitingContact(null); // Remove exiting contact after animation
+          setActiveContact(contact); // Set new contact
+        }, 400); // Exit animation duration
+      } else {
+        setActiveContact(contact);
+      }
+    };
 
     
 
@@ -140,7 +150,14 @@ const Contacts = () => {
               />
 
               <div className="contact-display-body" id="single-contact-display-div">
-                {activeContact && <ActiveContactModal contact={activeContact} />  }
+              <AnimatePresence>
+                {exitingContact && (
+                  <ActiveContactModal key={exitingContact.id} contact={exitingContact} isOpen={false} />
+                )}
+                {activeContact && (
+                  <ActiveContactModal key={activeContact.id} contact={activeContact} isOpen={true} />
+                )}
+              </AnimatePresence>
               </div>
 
               <div className="user-menu-bg d-none" id="scd-options-menu">

@@ -1,14 +1,20 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { motion } from "framer-motion";
 import "./../../index.css";
 import "./ActiveContactModal.css";
 
 
 
-const ActiveContactModal = ({ contact, onEdit, onDelete }) => {
+const ActiveContactModal = ({ contact, onEdit, onDelete, isOpen }) => {
 
     return (
-        <div className="active-contact-modal">
+        <motion.div
+            initial={{ x: "300%" }}
+            animate={{ x: isOpen ? "0%" : "300%" }}
+            exit={{ x: "300%" }}
+            transition={{ duration: 0.15, ease: "easeInOut" }}
+            className="single-contact-display" 
+        >
           <div className="single-contact-display-header">
             <div className="scd-initials" style={{ backgroundColor: contact.color }}>
               {contact.initials}
@@ -32,7 +38,7 @@ const ActiveContactModal = ({ contact, onEdit, onDelete }) => {
             <span className="scd-info-title">Phone</span>
             <span className="contact-phone">{contact.phone}</span>
           </div>
-        </div>
+        </motion.div>
     );
 };
 
