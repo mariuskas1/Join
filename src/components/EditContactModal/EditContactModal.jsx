@@ -24,7 +24,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
         e.preventDefault();
         
         try {
-          const response = await fetch(`${BASE_URL}${contact.id}/`, {
+          await fetch(`${BASE_URL}${contact.id}/`, {
               method: "PUT",
               headers: {
                   "Content-Type": "application/json",
@@ -39,6 +39,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
           console.error("Failed to update contact:", error);
       }
     };
+    
 
     const editContactLocally = () => {
       setContacts((prevContacts) => 
