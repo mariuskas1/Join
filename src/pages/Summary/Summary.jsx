@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Summary.css";
 import "../../index.css";
 import { getCurrentUserData } from "../../services/apiService";
+import { useNavigate } from "react-router-dom"; 
+
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
 
 
-
 const Summary = () => {
-
+    const navigate = useNavigate(); 
     const [currentUser, setCurrentUser] = useState(null);
     const [allTasks, setAllTasks] = useState([]);
     const [greeting, setGreeting] = useState("");
@@ -20,6 +21,7 @@ const Summary = () => {
         inProgress: 0,
         awaitingFeedback: 0,
     });
+
 
     useEffect(() => {
             const userData = getCurrentUserData();
@@ -143,14 +145,14 @@ const Summary = () => {
         <div className="summary-main">
             <div className="summary-infos">
                 <div className="summary-info-row">
-                    <div className="summary-info-box-row-1">
+                    <div className="summary-info-box-row-1" onClick={() => navigate("/board")}>
                         <img src="assets/img/summary-edit.png" className="summary-icon" />
                         <div className="summary-row-info">
                             <span className="summary-digit">{taskCounts.todo}</span>
                             <span className="summary-description">To-do</span>
                         </div>
                     </div>
-                    <div className="summary-info-box-row-1">
+                    <div className="summary-info-box-row-1" onClick={() => navigate("/board")}>
                         <img src="assets/img/summary-check.png" className="summary-icon" />
                         <div className="summary-row-info">
                             <span className="summary-digit">{taskCounts.done}</span>
@@ -159,7 +161,7 @@ const Summary = () => {
                     </div>
                 </div>
                 <div className="summary-info-row">
-                    <div className="summary-info-box-row-2">
+                    <div className="summary-info-box-row-2" onClick={() => navigate("/board")}>
                         <img src="assets/img/summary-urgent.png" className="summary-icon-row-2" />
                         <div className="summary-row-info">
                             <span className="summary-digit">{taskCounts.urgent}</span>
@@ -173,19 +175,19 @@ const Summary = () => {
                     </div>
                 </div>
                 <div className="summary-info-row">
-                    <div className="summary-info-box-row-3">
+                    <div className="summary-info-box-row-3" onClick={() => navigate("/board")}>
                         <div className="summary-row-info">
                             <span className="summary-digit">{taskCounts.inBoard}</span>
                             <span className="summary-description">Tasks in Board</span>
                         </div>
                     </div>
-                    <div className="summary-info-box-row-3">
+                    <div className="summary-info-box-row-3" onClick={() => navigate("/board")}>
                         <div className="summary-row-info">
                             <span className="summary-digit">{taskCounts.inProgress}</span>
                             <span className="summary-description">Tasks in Progress</span>
                         </div>
                     </div>
-                    <div className="summary-info-box-row-3">
+                    <div className="summary-info-box-row-3" onClick={() => navigate("/board")}>
                         <div className="summary-row-info">
                             <span className="summary-digit">{taskCounts.awaitingFeedback}</span>
                             <span className="summary-description">Awaiting Feedback</span>
