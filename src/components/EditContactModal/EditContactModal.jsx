@@ -39,7 +39,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
           console.error("Failed to update contact:", error);
       }
     };
-    
+
 
     const editContactLocally = () => {
       setContacts((prevContacts) => 
@@ -93,7 +93,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
                       type="email"
                       name="email"
                       placeholder="Email"
-                      value={contact.mail}
+                      value={editedContact.email}
                       onChange={handleChange}
                       className="index-input add-contact-input"
                       required

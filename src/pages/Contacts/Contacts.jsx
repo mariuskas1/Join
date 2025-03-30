@@ -127,6 +127,7 @@ const Contacts = () => {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
     
+        setShowEditContactModal(false);
         setActiveContact(null);
         setContacts((prevContacts) => prevContacts.filter(c => c.id !== activeContact.id));
       } catch (error) {
