@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import "./AddContactModal.css";
+import "../../pages/Contacts/Contacts.css";
+import { postData } from "../../services/apiService";
 
-const AddContactModal = ({ isOpen, onClose }) => {
+const AddContactModal = ({ isOpen, onClose, contacts, setContacts, currentUser }) => {
+    const colors = ["#FF7A00", "#9327FF", "#6E52FF", "#FC71FF", "#FFBB2B", "#1FD7C1", "#FF4646"];
+    let colorIndex = 0;
     const [contact, setContact] = useState({ name: "", email: "", phone: "" });
 
     const handleChange = (e) => {
@@ -12,12 +16,48 @@ const AddContactModal = ({ isOpen, onClose }) => {
   
     
 
-    const createNewContact = (e) => {
+    const createNewContact = async (e) => {
         e.preventDefault();
-      
+        if (!contact.name || !contact.email || !contact.phone) return;
+        const contactExists = contacts.some((c) => c.name === contact.name);
+        if (contactExists) {
+          alert("Contact already exists.");
+          return;
+        } 
+
+        let newContact = getNewContactObject();
+        console.log(newContact);
+        setContacts((prevContacts) => [...prevContacts, newContact]);
+        await postData("contacts/", newContact, currentUser.token);
+
+        setContact({ name: "", email: "", phone: "" });
         onClose();
     } 
+
+
+    const getNewContactObject = () => {
+      const contactColor = colors[colorIndex];
+      colorIndex = (colorIndex + 1) % colors.length;
+
+      const newContact = {
+        name: contact.name,
+        mail: contact.email,
+        phone: contact.phone,
+        initials: getContactInitials(contact.name),
+        info: "Contact Information",
+        color: contactColor,
+      };
+
+      return newContact;
+    }
   
+    const getContactInitials = (name) => {
+      return name
+        .split(/\s+/)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase();
+    };
 
     return createPortal(
         <div className="add-contact-modal-bg" onClick={onClose}>

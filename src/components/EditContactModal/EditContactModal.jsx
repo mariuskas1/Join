@@ -61,7 +61,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete }) => {
                     />
                   </div>
                   <div className="index-input-container">
-                    <img src="assets/img/mail.png" className="index-input-icon add-contact-icon" />
+                    <img src="assets/img/mail.png" className="index-input-icon add-contact-icon" id="mail-icon"/>
                     <input
                       type="email"
                       name="email"

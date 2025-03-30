@@ -171,6 +171,9 @@ const Contacts = () => {
               <AddContactModal 
                 isOpen={showAddContactModal} 
                 onClose={() => setShowAddContactModal(false)} 
+                contacts={contacts}
+                currentUser={currentUser}
+                setContacts={setContacts}
               />
             )}
           </AnimatePresence>
