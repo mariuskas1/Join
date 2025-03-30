@@ -8,6 +8,7 @@ import AddContactModal from '../../components/AddContactModal/AddContactModal';
 import EditContactModal from '../../components/EditContactModal/EditContactModal';
 
 
+
 const Contacts = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [contacts, setContacts] = useState([]);
@@ -18,6 +19,8 @@ const Contacts = () => {
     const [showAddContactModal, setShowAddContactModal] = useState(false);
     const [showEditContactModal, setShowEditContactModal] = useState(false);
     const [showContactDetails, setShowContactDetails] = useState(false);
+
+    const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/contacts/";
 
       
     useEffect(() => {
@@ -109,8 +112,26 @@ const Contacts = () => {
     const handleEditContact = () => {
 
     }
-    const deleteContact = () => {
 
+    const deleteContact = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}${activeContact.id}/`, {
+          method: "DELETE",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${currentUser.token}`,
+          },
+      });
+    
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+    
+        setActiveContact(null);
+        setContacts((prevContacts) => prevContacts.filter(c => c.id !== activeContact.id));
+      } catch (error) {
+        console.error(error);
+      }
     }
 
 
