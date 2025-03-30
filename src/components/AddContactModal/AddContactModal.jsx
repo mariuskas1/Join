@@ -49,7 +49,7 @@ const AddContactModal = ({ isOpen, onClose }) => {
                     <input type="text" name="name" placeholder="Name" value={contact.name} onChange={handleChange} className="index-input add-contact-input" required />
                   </div>
                   <div className="index-input-container">
-                    <img src="assets/img/mail.png" className="index-input-icon add-contact-icon" />
+                    <img src="assets/img/mail.png" className="index-input-icon add-contact-icon" id="mail-icon" />
                     <input type="email" name="email" placeholder="Email" value={contact.email} onChange={handleChange} className="index-input add-contact-input" required />
                   </div>
                   <div className="index-input-container">

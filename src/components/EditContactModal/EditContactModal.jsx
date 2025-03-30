@@ -86,7 +86,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete }) => {
                   </div>
                   <div className="add-contact-form-btns">
                     <button className="cancel-contact-btn" type="button" onClick={onDelete}>
-                      Delete<img className="btn-icon" src="assets/img/trash.png" />
+                      Delete
                     </button>
                     <button className="create-contact-btn" type="submit">
                       Save<img className="btn-icon" src="assets/img/check_white.png" />
