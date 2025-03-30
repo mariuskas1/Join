@@ -3,8 +3,11 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import "./EditContactModal.css";
 
-const EditContactModal = ({ contact, isOpen, onClose,  onDelete }) => {
+const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, currentUser, setActiveContact }) => {
     const [editedContact, setEditedContact] = useState({ name: "", email: "", phone: "" });
+
+    const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/contacts/";
+
 
     useEffect(() => {
         if (contact) {
@@ -16,11 +19,34 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete }) => {
         setEditedContact({ ...editedContact, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+
+    const editContact = async (e) => {
         e.preventDefault();
         
-        onClose();
+        try {
+          const response = await fetch(`${BASE_URL}${contact.id}/`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Token ${currentUser.token}`,
+              },
+              body: JSON.stringify(editedContact),
+          });
+    
+          editContactLocally();
+          onClose();
+      } catch (error) {
+          console.error("Failed to update contact:", error);
+      }
     };
+
+    const editContactLocally = () => {
+      setContacts((prevContacts) => 
+        prevContacts.map((c) => (c.id === editedContact.id ? editedContact : c))
+      );
+      setActiveContact(editedContact);
+    }
+
   
 
     return createPortal(
@@ -47,7 +73,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete }) => {
                 <img src="assets/img/Close2.png" onClick={onClose} className="close-contact-modal-icon" />
               </div>
               <div className="add-contact-form-div">
-                <form onSubmit={handleSubmit} className="add-contact-form">
+                <form onSubmit={editContact} className="add-contact-form">
                   <div className="index-input-container add-contact-input-container">
                     <img src="assets/img/person2.png" className="index-input-icon add-contact-icon" />
                     <input

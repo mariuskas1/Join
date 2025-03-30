@@ -121,7 +121,7 @@ const Contacts = () => {
               "Content-Type": "application/json",
               Authorization: `Token ${currentUser.token}`,
           },
-      });
+        });
     
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -206,6 +206,9 @@ const Contacts = () => {
                 contact={activeContact} 
                 onClose={() => setShowEditContactModal(false)} 
                 onDelete={deleteContact}
+                setContacts={setContacts}
+                currentUser={currentUser}
+                setActiveContact={setActiveContact}
               />
             )}
           </AnimatePresence>
