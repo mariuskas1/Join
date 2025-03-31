@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import "./../../index.css";
 import "./TaskForm.css";
 import { postData } from '../../services/apiService';
+import { useLocation } from "react-router-dom";
 
 
 
-const TaskForm = ({ contacts, currentUserData, onTaskAdded }) => {
+const TaskForm = ({ contacts, currentUserData, onTaskAdded, taskStatus = "todo" }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
@@ -16,6 +17,7 @@ const TaskForm = ({ contacts, currentUserData, onTaskAdded }) => {
   const [newSubtask, setNewSubtask] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const inputRef = useRef(null);
+  const [status, setStatus] = useState(taskStatus);
 
   useEffect(() => {
     if (editingIndex !== null && inputRef.current) {
@@ -50,6 +52,7 @@ const TaskForm = ({ contacts, currentUserData, onTaskAdded }) => {
     setCategory('');
     setSubtasks([]);
     setNewSubtask('');
+    setStatus('todo');
   };
 
   const editSubtask = (index) => {
@@ -98,7 +101,7 @@ const TaskForm = ({ contacts, currentUserData, onTaskAdded }) => {
         date,
         prio,
         category,
-        status: "todo"
+        status
       };
       hideRequiredLabels();
       return taskToSend;

@@ -4,6 +4,7 @@ import "./Board.css";
 import "../../index.css";
 import TaskCard from '../../components/TaskCard/TaskCard';
 import TaskModal from '../../components/TaskModal/TaskModal';
+import AddTaskModal from '../../components/AddTaskModalBoard/AddTaskModal';
 import { AnimatePresence } from "framer-motion";
 import { getCurrentUserData } from '../../services/apiService';
 import { getAllContacts } from '../../services/apiService';
@@ -28,6 +29,8 @@ const Board = () => {
 
     const [hoveredColumn, setHoveredColumn] = useState(null);
     const columnRef = useRef({});
+
+    const [taskStatus, setTaskStatus] = useState('');
 
     const statusLabels = {
         todo: "To do",
@@ -194,6 +197,13 @@ const Board = () => {
 
         setHoveredColumn(null);
     };
+
+    const addTaskWithStatus = (status) => {
+        
+        setTaskStatus(status);
+        console.log(taskStatus);
+        setShowAddTaskModal(true);
+    }
        
 
     return(
@@ -236,7 +246,7 @@ const Board = () => {
                     <div className="board-column" key={index}>
                     <div className="board-column-header">
                         <span className="board-column-title">{status}</span>
-                        <button className="board-column-add-btn" onClick={() => console.log(`Add task to ${statusKey}`)}>
+                        <button className="board-column-add-btn" onClick={() => addTaskWithStatus(statusKey)}>
                         <img src="assets/img/plus_blue.png" className="column-add-btn-icon" alt="Add" />
                         </button>
                     </div>
@@ -289,21 +299,13 @@ const Board = () => {
 
                 
 
-        {showAddTaskModal && (
-            <div className="add-task-modal-bg" onClick={toggleAddTaskModal}>
-            <div className="add-task-modal" onClick={(e) => e.stopPropagation()}>
-                <div className="add-task-modal-header">
-                <h1>Add Task</h1>
-                <img src="assets/img/close.png" className="close-task-form-icon" onClick={toggleAddTaskModal} alt="Close" />
-                </div>
-                <div> {/* Task form goes here */} </div>
-            </div>
-            </div>
-        )}
+            {showAddTaskModal && (
+                <AddTaskModal currentUserData={currentUser} contacts={contacts} taskStatus={taskStatus} ></AddTaskModal>
+            )}
 
-        {/* <div className="task-added-modal" id="task-added-modal">
-            Task added to board <img src="assets/img/board1.png" id="task-added-msg-img" alt="Board" />
-        </div> */}
+            {/* <div className="task-added-modal" id="task-added-modal">
+                Task added to board <img src="assets/img/board1.png" id="task-added-msg-img" alt="Board" />
+            </div> */}
         </main>
     );
 };
