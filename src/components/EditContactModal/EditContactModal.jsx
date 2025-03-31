@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import "./EditContactModal.css";
 
 const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, currentUser, setActiveContact }) => {
-    const [editedContact, setEditedContact] = useState({ name: "", email: "", phone: "" });
+    const [editedContact, setEditedContact] = useState({ name: "", mail: "", phone: "" });
 
     const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/contacts/";
 
@@ -81,7 +81,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
                       type="text"
                       name="name"
                       placeholder="Name"
-                      value={editedContact.name}
+                      value={editedContact?.name ?? ""}
                       onChange={handleChange}
                       className="index-input add-contact-input"
                       required
@@ -93,7 +93,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
                       type="email"
                       name="email"
                       placeholder="Email"
-                      value={editedContact.email}
+                      value={editedContact?.mail ?? ""}
                       onChange={handleChange}
                       className="index-input add-contact-input"
                       required
@@ -105,7 +105,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
                       type="tel"
                       name="phone"
                       placeholder="Phone"
-                      value={editedContact.phone}
+                      value={editedContact?.phone ?? ""}
                       onChange={handleChange}
                       className="index-input add-contact-input"
                       required
