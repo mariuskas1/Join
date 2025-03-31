@@ -14,6 +14,6 @@
     justify-content: center;
     position: fixed;
     bottom: 20%;
-    right: 50%;
-    transform: translateX(-50%);
+    right: 41%; 
+    /* transform: translateX(20%);  */
 }
