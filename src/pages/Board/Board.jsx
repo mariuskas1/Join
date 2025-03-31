@@ -199,10 +199,13 @@ const Board = () => {
     };
 
     const addTaskWithStatus = (status) => {
-        
         setTaskStatus(status);
-        console.log(taskStatus);
         setShowAddTaskModal(true);
+    }
+
+    const displayNewTaskOnBoard = () => {
+        getAllTasks();
+        setShowAddTaskModal(false);
     }
        
 
@@ -222,7 +225,7 @@ const Board = () => {
                 />
                 <img src="assets/img/search.png" className="board-input-icon" alt="Search" />
             </div>
-            <button className="board-header-add-task-btn" onClick={toggleAddTaskModal}>
+            <button className="board-header-add-task-btn" onClick={() => addTaskWithStatus('todo')}>
                 Add Task <img src="assets/img/add_white.png" className="board-add-task-icon" alt="Add" />
             </button>
             <button className="board-header-btn-mobile" onClick={toggleAddTaskModal}>
@@ -298,10 +301,19 @@ const Board = () => {
                 )}
 
                 
+                <AnimatePresence>
+                    {showAddTaskModal && (
+                        <AddTaskModal 
+                            currentUserData={currentUser} 
+                            contacts={contacts} 
+                            taskStatus={taskStatus} 
+                            onClose={toggleAddTaskModal} 
+                            isOpen={showAddTaskModal}
+                            taskAdded={displayNewTaskOnBoard}
+                        />
 
-            {showAddTaskModal && (
-                <AddTaskModal currentUserData={currentUser} contacts={contacts} taskStatus={taskStatus} ></AddTaskModal>
-            )}
+                    )}
+                </AnimatePresence>
 
             {/* <div className="task-added-modal" id="task-added-modal">
                 Task added to board <img src="assets/img/board1.png" id="task-added-msg-img" alt="Board" />

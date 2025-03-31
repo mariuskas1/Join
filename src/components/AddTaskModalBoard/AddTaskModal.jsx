@@ -2,20 +2,45 @@ import React from 'react'
 import "./../../index.css";
 import "./AddTaskModal.css";
 import TaskForm from '../TaskForm/TaskForm';
+import ReactDOM from 'react-dom';
+import { motion } from 'framer-motion';
 
 
-const AddTaskModal = ({ isOpen, onClose, contacts, currentUserData, taskStatus }) => {
-    if (!isOpen) return null;
+const AddTaskModal = ({ isOpen, onClose, contacts, currentUserData, taskStatus, taskAdded }) => {
+   
+
   
-    return (
-        <div className="add-task-modal-bg" onClick={toggleAddTaskModal}>
-        <div className="add-task-modal" onClick={(e) => e.stopPropagation()}>
+    return ReactDOM.createPortal(
+        <>
+        <div className="add-task-modal-bg" onClick={onClose}></div>
+
+        <motion.div
+            initial={{ x: "200%" }}
+            animate={{ x: isOpen ? "0%" : "200%" }}
+            exit={{ x: "200%" }}
+            transition={{ duration: 0.15, ease: "easeInOut" }}
+            className="add-task-modal"
+            onClick={(e) => e.stopPropagation()}
+        >
             <div className="add-task-modal-header">
-            <img src="assets/img/close.png" className="close-task-form-icon" onClick={toggleAddTaskModal} alt="Close" />
+                <h1>Add Task</h1>
+                <img
+                    src="assets/img/close.png"
+                    className="close-task-form-icon"
+                    onClick={onClose} 
+                    alt="Close"
+                />
             </div>
-            <TaskForm contacts={contacts} currentUserData={currentUserData} taskStatus={taskStatus}> </TaskForm>
-        </div>
-        </div>
+
+            <TaskForm
+                contacts={contacts}
+                currentUserData={currentUserData}
+                taskStatus={taskStatus}
+                onTaskAdded={taskAdded}
+            />
+        </motion.div>
+        </>,
+        document.getElementById('portal') 
     );
   };
   
