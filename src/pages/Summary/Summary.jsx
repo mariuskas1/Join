@@ -202,7 +202,7 @@ const Summary = () => {
 
         <div className="summary-greeting-mobile">
             <span className="greeting-daytime">{greeting}</span>
-            <span className="greeting-name">{currentUser ? currentUser.name : "Guest"}</span>
+            <span className="greeting-name">{currentUser && currentUser.name}</span>
         </div>
       </main>
     );

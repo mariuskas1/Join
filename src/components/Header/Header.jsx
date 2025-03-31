@@ -13,7 +13,6 @@ const Header = () => {
   useEffect(() => {
     const userData = getCurrentUserData();
     setCurrentUser(userData);
-    console.log("hederd:",currentUser) 
   }, []);
 
   const toggleUserMenu = () => {
@@ -26,6 +25,24 @@ const Header = () => {
     navigate("/login");
   }
   
+  const getUserInitials = () => {
+    if (!currentUser || currentUser.isGuest) {
+        return "G"; 
+    }
+
+    let currentUserName = currentUser.name.trim().split(/\s+/);
+    let initials = "";
+
+    if (currentUserName.length === 1) {
+        initials = currentUserName[0][0]; 
+    } else if (currentUserName.length === 2) {
+        initials = currentUserName[0][0] + currentUserName[1][0]; 
+    } else if (currentUserName.length > 2) {
+        initials = currentUserName[0][0] + currentUserName[currentUserName.length - 1][0]; 
+    }
+
+    return initials.toUpperCase();
+  };
   
     return (
       <header>
@@ -34,7 +51,7 @@ const Header = () => {
         
         <div className="header-icons">
           <img className="help-icon" src="/assets/img/help.png" alt="Help Icon" onClick={() => navigate("/help")}/>
-          <div className="user-initials" id="user-initials" onClick={toggleUserMenu}>{currentUser?.initials || "G"}</div>
+          <div className="user-initials" id="user-initials" onClick={toggleUserMenu}>{getUserInitials()}</div>
         </div>
 
         {menuOpen && (
