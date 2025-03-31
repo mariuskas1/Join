@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./Signup.css";
 import "../../index.css";
+import SignupModal from "../../components/SignupModal/SignupModal";
+
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/register/";
 
 
 const SignUp = () => {
-    // State to manage the form fields
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [passwordOne, setPasswordOne] = useState("");
@@ -16,47 +17,51 @@ const SignUp = () => {
     const [isDisabled, setIsDisabled] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const navigate = useNavigate();
   
-    // Handle input change
     const handleInputChange = (e, setter) => {
       setter(e.target.value);
     };
   
-    // Handle checkbox change
     const handleCheckboxChange = (e) => {
       setIsPolicyAccepted(e.target.checked);
       setIsDisabled(!e.target.checked);
     };
   
-    // Handle the sign-up logic
+    
     const signUp = async (e) => {
       e.preventDefault();
+      setIsModalVisible(true);
+      setTimeout(() => {
+        setIsModalVisible(false);
+        navigate('/');
+      }, 2000);
   
-      if (passwordOne !== passwordTwo) {
-        setErrorMessage("Passwords do not match");
-        return;
-      }
+      // if (passwordOne !== passwordTwo) {
+      //   setErrorMessage("Passwords do not match");
+      //   return;
+      // }
   
-      try {
-        const response = await fetch(BASE_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            username: email,
-            first_name: name,
-            password: passwordOne,
-            repeated_password: passwordTwo,
-          }),
-        });
+      // try {
+      //   const response = await fetch(BASE_URL, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       email: email,
+      //       username: email,
+      //       first_name: name,
+      //       password: passwordOne,
+      //       repeated_password: passwordTwo,
+      //     }),
+      //   });
   
-        await checkSignUpResponse(response);
-      } catch (error) {
-        console.error(error);
-        setIsDisabled(false);
-      }
+      //   await checkSignUpResponse(response);
+      // } catch (error) {
+      //   console.error(error);
+      //   setIsDisabled(false);
+      // }
     };
   
     // Check the response from the API after the sign-up attempt
@@ -69,21 +74,21 @@ const SignUp = () => {
         return;
       }
   
-      const data = await response.json();
-      displaySignedUpModal();
+      setIsModalVisible(true);
       setIsDisabled(false);
   
       setTimeout(() => {
-        window.location.href = "index.html?msg=You signed up successfully";
-      }, 1000);
+        setIsModalVisible(false);
+        navigate('/');
+      }, 3000);
+
+
     };
   
-    // Display the "signed-up successfully" modal
-    const displaySignedUpModal = () => {
-      setIsModalVisible(true);
-    };
+   
+    
   
-    // Close the modal
+    
     const closeModal = () => {
       setIsModalVisible(false);
     };
@@ -165,7 +170,7 @@ const SignUp = () => {
                 onChange={handleCheckboxChange}
               />
               <label htmlFor="policy" className="checkbox-label">
-                I accept the <a href="privacy_policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                I accept the <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
               </label>
             </div>
   
@@ -176,19 +181,12 @@ const SignUp = () => {
         </div>
   
         <div className="index-link-div">
-          <a href="privacy_policy.html">Privacy Policy</a>
-          <a href="legal_notice.html">Legal notices</a>
+          <a href="/privacy-policy" target="_blank">Privacy Policy</a>
+          <a href="/legal-notice" target="_blank">Legal Notices</a>
         </div>
   
-        {/* Modal for successful sign-up */}
-        {isModalVisible && (
-          <div className="sign-up-modal-bg" id="sign-up-modal-bg">
-            <div className="sign-up-modal" id="sign-up-modal">
-              You Signed Up successfully
-              <button onClick={closeModal}>Close</button>
-            </div>
-          </div>
-        )}
+        
+        <SignupModal isOpen={isModalVisible}></SignupModal>
       </div>
     );
   };
