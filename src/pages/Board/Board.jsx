@@ -15,10 +15,10 @@ const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/
 
 const Board = () => {
     const [searchQuery, setSearchQuery] = useState("");
+    const [filteredTasks, setFilteredTasks] = useState([]);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     const [showTaskModal, setTaskModalOpen] = useState(false);
 
-    const handleSearch = (e) => setSearchQuery(e.target.value);
     const toggleAddTaskModal = () => setShowAddTaskModal(!showAddTaskModal);
 
     const [currentUser, setCurrentUser] = useState(null);
@@ -88,6 +88,7 @@ const Board = () => {
 
             let data = await response.json();
             setTasks(data);
+            setFilteredTasks(data);
         } catch (error) {
             console.error("Failed to fetch tasks:", error);
         }
@@ -113,6 +114,21 @@ const Board = () => {
             console.error(error);
         }
     }
+
+    const performSearch = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (query.trim().length >= 3) {
+            const searchedTasks = tasks.filter(task =>
+                task.title.toLowerCase().includes(query.toLowerCase()) ||
+                task.description.toLowerCase().includes(query.toLowerCase())
+            );
+            setFilteredTasks(searchedTasks);
+        } else {
+            setFilteredTasks(tasks);
+        }
+    };
 
 
     
@@ -221,7 +237,7 @@ const Board = () => {
                 placeholder="Find Task"
                 className="board-header-input"
                 value={searchQuery}
-                onChange={handleSearch}
+                onChange={performSearch}
                 />
                 <img src="assets/img/search.png" className="board-input-icon" alt="Search" />
             </div>
@@ -264,8 +280,8 @@ const Board = () => {
                         }}
                         onDragLeave={() => removeHighlight(statusKey)}
                     >
-                        {tasks.filter((task) => task.status === statusKey).length > 0 ? (
-                            tasks.filter((task) => task.status === statusKey).map((task) => (
+                        {filteredTasks.filter((task) => task.status === statusKey).length > 0 ? (
+                            filteredTasks.filter((task) => task.status === statusKey).map((task) => (
                                 <TaskCard 
                                     key={task.id} 
                                     task={task} 

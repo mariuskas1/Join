@@ -17,11 +17,11 @@ const TaskModal = ({ task, contacts, currentUser, setTasks, onClose, deleteTask,
     const renderPriority = (priority) => {
         switch(priority) {
             case 'low':
-                return <td class="large-task-info-content"> <img className="large-prio-icon" src="assets/img/low.png" alt="Low priority" />Low</td>;
+                return <td className="large-task-info-content"> <img className="large-prio-icon" src="assets/img/low.png" alt="Low priority" />Low</td>;
             case 'medium':
-                return <td class="large-task-info-content"> <img className="large-prio-icon" src="assets/img/medium_orange.png" alt="Medium priority" />Medium</td> ;
+                return <td className="large-task-info-content"> <img className="large-prio-icon" src="assets/img/medium_orange.png" alt="Medium priority" />Medium</td> ;
             case 'urgent':
-                return <td class="large-task-info-content"> <img className="large-prio-icon" src="assets/img/urgent.png" alt="Urgent priority" />Urgent</td>;
+                return <td className="large-task-info-content"> <img className="large-prio-icon" src="assets/img/urgent.png" alt="Urgent priority" />Urgent</td>;
             default:
                 return null;
         }
