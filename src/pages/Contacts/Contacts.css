@@ -266,14 +266,14 @@
     .scd-initials{
         margin-right: 16px;
     }
-    .add-contact-modal{
+    .add-contact-modal, .edit-contact-modal{
         flex-direction: column;
-        height: 80%;
-        width: 80%;
+        height: 80% !important;
+        width: 80% !important;
     }
     .add-contact-modal-left{
         height:50%;
-        width: 100%;
+        width: 100% !important;
         border-top-left-radius: 32px;
         border-top-right-radius: 32px;
         border-bottom-left-radius: 0;
@@ -281,32 +281,32 @@
     }
     .add-contact-modal-right{
         height: 50%;
-        width: 100%;
-        border-bottom-left-radius: 32px;
-        border-bottom-right-radius: 32px;
-        border-top-right-radius: 0;
+        width: 100% !important;
+        border-bottom-left-radius: 32px !important;
+        border-bottom-right-radius: 32px !important;
+        border-top-right-radius: 0 !important;
     }
     .add-contact-modal-logo{
-        display: none;
+        display: none !important;
     }
     .add-contact-modal-lh{
-        opacity: 1;
+        opacity: 1 !important;
     }
     .add-contact-modal-rh{
-        display: none;
+        display: none !important;
     }
     .add-contact-form-div{
-        margin-top: 16px;
+        margin-top: 16px !important;
     }
     .add-contact-form-btns{
-        margin-top: 0;
+        margin-top: 0 !important;
     }
-    .cancel-contact-btn{
-        height: 40px;
+    /* .cancel-contact-btn{
+        height: 40px !important;
     }
     .create-contact-btn{
-        height: 40px;
-    }
+        height: 40px !important;
+    } */
 
 }
 
