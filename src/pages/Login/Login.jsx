@@ -78,7 +78,6 @@ const Login = () => {
             if (rememberMe) {
                 localStorage.setItem("rememberedUser", JSON.stringify(user));
             }
-            localStorage.setItem("logged in?", "yes");
 
             navigate("/summary");
         } catch (error) {

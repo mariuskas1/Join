@@ -116,18 +116,16 @@ const Summary = () => {
         const currentHour = new Date().getHours();
         let greetingText = "";
         if (currentHour < 12) {
-            greetingText = "Good morning,";
+            greetingText = "Good morning, ";
         } else if (currentHour < 18) {
-            greetingText = "Good afternoon,";
+            greetingText = "Good afternoon, ";
         } else {
-            greetingText = "Good evening,";
+            greetingText = "Good evening, ";
         }
 
         if (currentUser && currentUser.isGuest) {
-            greetingText = greetingText.slice(0, -1) + "!"; 
-        } else if (currentUser && currentUser.name) {
-            greetingText = `${greetingText} ${currentUser.name}`; 
-        }
+            greetingText = greetingText.slice(0, -2) + "!"; 
+        } 
 
         setGreeting(greetingText);
     };
@@ -198,7 +196,7 @@ const Summary = () => {
 
             <div className="summary-greeting">
                 <span className="greeting-daytime">{greeting}</span>
-                <span className="greeting-name">{currentUser ? currentUser.name : "Guest"}</span>
+                <span className="greeting-name">{currentUser && currentUser.name}</span>
             </div>
         </div>
 
