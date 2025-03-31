@@ -17,6 +17,7 @@ const SignUp = () => {
     const [isDisabled, setIsDisabled] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('')
     const navigate = useNavigate();
   
     const handleInputChange = (e, setter) => {
@@ -31,67 +32,59 @@ const SignUp = () => {
     
     const signUp = async (e) => {
       e.preventDefault();
-      setIsModalVisible(true);
-      setTimeout(() => {
-        setIsModalVisible(false);
-        navigate('/');
-      }, 2000);
-  
-      // if (passwordOne !== passwordTwo) {
-      //   setErrorMessage("Passwords do not match");
-      //   return;
-      // }
-  
-      // try {
-      //   const response = await fetch(BASE_URL, {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       email: email,
-      //       username: email,
-      //       first_name: name,
-      //       password: passwordOne,
-      //       repeated_password: passwordTwo,
-      //     }),
-      //   });
-  
-      //   await checkSignUpResponse(response);
-      // } catch (error) {
-      //   console.error(error);
-      //   setIsDisabled(false);
-      // }
-    };
-  
-    // Check the response from the API after the sign-up attempt
-    const checkSignUpResponse = async (response) => {
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error(errorData);
-        setErrorMessage(errorData.message || "Error during sign-up");
-        setIsDisabled(false);
+      if (passwordOne !== passwordTwo) {
+        displayModal("Passwords do not match");
         return;
       }
   
-      setIsModalVisible(true);
-      setIsDisabled(false);
+      try {
+        const response = await fetch(BASE_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            username: email,
+            first_name: name,
+            password: passwordOne,
+            repeated_password: passwordTwo,
+          }),
+        });
   
+        await checkSignUpResponse(response);
+      } catch (error) {
+        console.error(error);
+        setIsDisabled(false);
+      }
+    };
+  
+    
+    const checkSignUpResponse = async (response) => {
+      if (!response.ok) {
+        displayModal("Sign up failed. Please try again.");
+        setIsDisabled(false);
+        return;
+      }
+
+      setIsDisabled(false);
+      displayModal("You signed up succesfully.");
+      setTimeout(() => {
+        navigate('/');
+      }, 3500); 
+    };
+
+
+    const displayModal = (message) => {
+      setModalMessage(message)
+      setIsModalVisible(true);
+      
       setTimeout(() => {
         setIsModalVisible(false);
-        navigate('/');
       }, 3000);
-
-
-    };
+    }
   
    
-    
-  
-    
-    const closeModal = () => {
-      setIsModalVisible(false);
-    };
   
     return (
       <div className="index-main">
@@ -158,8 +151,6 @@ const SignUp = () => {
               />
             </div>
   
-            {errorMessage && <div id="log-in-msg">{errorMessage}</div>}
-  
             <div className="checkbox-container-2">
               <input
                 type="checkbox"
@@ -186,7 +177,7 @@ const SignUp = () => {
         </div>
   
         
-        <SignupModal isOpen={isModalVisible}></SignupModal>
+        <SignupModal isOpen={isModalVisible} message={modalMessage}></SignupModal>
       </div>
     );
   };
