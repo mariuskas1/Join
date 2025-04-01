@@ -19,6 +19,7 @@ const Contacts = () => {
     const [showAddContactModal, setShowAddContactModal] = useState(false);
     const [showEditContactModal, setShowEditContactModal] = useState(false);
     const [showContactDetails, setShowContactDetails] = useState(false);
+    const [showScdOptionsMenu, setShowScdOptionsMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1080);
 
@@ -111,6 +112,10 @@ const Contacts = () => {
       }
     };
 
+    const toggleScdOptionsMobile = () => {
+      setShowScdOptionsMenu((prev) => !prev); 
+    };
+
     
     const handleHideContactDetails = () => {
       setActiveContact(null);
@@ -160,8 +165,6 @@ const Contacts = () => {
 
         {!isMobile || showActiveContact ? (
           <div className="contact-display">
-            
-          
             <div className="contacts-display-header">
               <h1>Contacts</h1>
               <div className="contacts-header-bar" id="c-header-bar-desktop"></div>
@@ -170,7 +173,6 @@ const Contacts = () => {
             </div>
           
             
-
             {isMobile && showActiveContact && (
               <img
                 src="assets/img/arrow-left-line.png"
@@ -194,33 +196,35 @@ const Contacts = () => {
               </AnimatePresence>
             </div>
 
-            {/* <div className="user-menu-bg d-none" id="scd-options-menu">
-              <div className="scd-options-menu">
-                <button className="scd-option-btn" onClick={() => setShowEditContactModal(true)}>
-                  <img src="assets/img/edit.png" alt="Edit" /> Edit
-                </button>
-                <button className="scd-option-btn" onClick={deleteContact}>
-                  <img src="assets/img/delete.png" alt="Delete" /> Delete
-                </button>
+            {showScdOptionsMenu && (
+              <div className="user-menu-bg" onClick={toggleScdOptionsMobile}>
+                <div className="scd-options-menu" id='scd-options-mobile'>
+                  <button className="scd-option-btn" onClick={() => setShowEditContactModal(true)}>
+                    <img src="assets/img/edit.png" alt="Edit" /> Edit
+                  </button>
+                  <button className="scd-option-btn" onClick={deleteContact}>
+                    <img src="assets/img/delete.png" alt="Delete" /> Delete
+                  </button>
+                </div>
               </div>
-            </div> */}
+            )}
           </div>
         ) : null}
       
         
 
-        {(isMobile && !showActiveContact) && (
-          <button className="add-contact-btn-mobile" id="addContactBtnMobile" onClick={() => setShowAddContactModal(true)}>
-            <img src="assets/img/person_add.png" id="mobileContactOptionsBtn" alt="Add Contact" />
+        
+          <button className="add-contact-btn-mobile" id="addContactBtnMobile" onClick={showActiveContact ? toggleScdOptionsMobile : () => setShowAddContactModal(true)}>
+            <img src={showActiveContact ? "assets/img/three_dots.png" : "assets/img/person_add.png"}  id="mobileContactOptionsBtn" alt="Add Contact" />
           </button>
-        )}
+        
 
         <AnimatePresence>
           {showAddContactModal && (
             <AddContactModal 
               isOpen={showAddContactModal} 
               onClose={() => setShowAddContactModal(false)} 
-              contacts={groupedContacts}
+              contacts={contacts}
               currentUser={currentUser}
               setContacts={setContacts}
             />

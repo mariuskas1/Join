@@ -27,10 +27,7 @@ const AddContactModal = ({ isOpen, onClose, contacts, setContacts, currentUser }
         } 
 
         let newContact = getNewContactObject();
-        
         const savedContact = await postData("contacts/", newContact, currentUser.token);
-        console.log(savedContact);
-
         setContacts((prevContacts) => [...prevContacts, savedContact]);
         setContact({ name: "", email: "", phone: "" });
         onClose();
