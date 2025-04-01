@@ -50,8 +50,9 @@ const SignUp = () => {
             repeated_password: passwordTwo,
           }),
         });
-  
-        await checkSignUpResponse(response);
+        
+        const jsonResponse = await response.json();
+        await checkSignUpResponse(jsonResponse);
       } catch (error) {
         console.error(error);
         setIsDisabled(false);
@@ -60,17 +61,22 @@ const SignUp = () => {
   
     
     const checkSignUpResponse = async (response) => {
-      if (!response.ok) {
+      if (response.username[0] === "A user with that username already exists.") {
+        displayModal("A user with this email already exists.");
+        setIsDisabled(false);
+        return;
+      } else if (!response.token) {
         displayModal("Sign up failed. Please try again.");
         setIsDisabled(false);
         return;
+      } else {
+        setIsDisabled(false);
+        displayModal("You signed up succesfully.");
+        createNewContactForSignedUpUser();
+        setTimeout(() => {
+          navigate('/');
+        }, 3500); 
       }
-
-      setIsDisabled(false);
-      displayModal("You signed up succesfully.");
-      setTimeout(() => {
-        navigate('/');
-      }, 3500); 
     };
 
 
@@ -82,8 +88,11 @@ const SignUp = () => {
         setIsModalVisible(false);
       }, 3000);
     }
-  
    
+
+    const createNewContactForSignedUpUser = () => {
+
+    }
   
     return (
       <div className="index-main">
