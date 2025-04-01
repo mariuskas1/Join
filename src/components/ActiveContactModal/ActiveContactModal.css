@@ -115,3 +115,9 @@
     cursor: pointer;
     background-color: #29ABE2;
 }
+
+@media(max-width: 700px) AND (min-width:600px){
+    .scd-initials{
+        margin-right: 8px;
+    }
+}

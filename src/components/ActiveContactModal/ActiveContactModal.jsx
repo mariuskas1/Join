@@ -10,9 +10,9 @@ const ActiveContactModal = ({ contact, onEdit, onDelete, isOpen }) => {
     
     return (
         <motion.div
-            initial={{ x: "300%" }}
-            animate={{ x: isOpen ? "0%" : "300%" }}
-            exit={{ x: "300%" }}
+            initial={{ x: "400%" }}
+            animate={{ x: isOpen ? "0%" : "400%" }}
+            exit={{ x: "400%" }}
             transition={{ duration: 0.15, ease: "easeInOut" }}
             className="single-contact-display" 
         >

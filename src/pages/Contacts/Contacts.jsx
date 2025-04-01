@@ -20,6 +20,8 @@ const Contacts = () => {
     const [showEditContactModal, setShowEditContactModal] = useState(false);
     const [showContactDetails, setShowContactDetails] = useState(false);
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1080);
+
     const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/contacts/";
 
       
@@ -28,7 +30,13 @@ const Contacts = () => {
       setCurrentUser(userData);
     }, []);
 
-    
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 1080);
+      };
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -104,11 +112,10 @@ const Contacts = () => {
     };
 
     
-
-    
     const handleHideContactDetails = () => {
+      setActiveContact(null);
+    };
 
-    }
     const handleEditContact = () => {
 
     }
@@ -136,87 +143,102 @@ const Contacts = () => {
     }
 
 
-      return (
-        <div className="main-contacts">
+    return (
+      <div className="main-contacts">
+        {!(isMobile && showActiveContact) && (
           <div className="contacts-display-div">
-            <button className="add-contact-btn" id="add-contact-btn" onClick={setShowAddContactModal}>
+            <button className="add-contact-btn" id="add-contact-btn" onClick={() => setShowAddContactModal(true)}>
               Add new contact <img src="assets/img/person_add.png" className="add-contact-icon" />
             </button>
             <div id="contacts-display-bar">
-                {Object.keys(groupedContacts).map(letter => {
-                      return getContactGroupTemplate(letter, groupedContacts[letter]);
-                })}
+              {Object.keys(groupedContacts).map((letter) => 
+                getContactGroupTemplate(letter, groupedContacts[letter])
+              )}
             </div>
           </div>
-    
+        )}
+
+        {isMobile && showActiveContact && (
           <div className="contact-display">
+            
               <div className="contacts-display-header">
-                  <h1>Contacts</h1>
-                  <div className="contacts-header-bar" id="c-header-bar-desktop"></div>
-                  <span className="contacts-header-span">Better with a team</span>
-                  <div className="contacts-header-bar" id="c-header-bar-mobile"></div>
+                <h1>Contacts</h1>
+                <div className="contacts-header-bar" id="c-header-bar-desktop"></div>
+                <span className="contacts-header-span">Better with a team</span>
+                <div className="contacts-header-bar" id="c-header-bar-mobile"></div>
               </div>
+            
 
+            {isMobile && showActiveContact && (
               <img
-                  src="assets/img/arrow-left-line.png"
-                  className="return-arrow-contacts-mobile return-img"
-                  onClick={handleHideContactDetails}
-                  alt="Back"
+                src="assets/img/arrow-left-line.png"
+                className="return-arrow-contacts-mobile return-img"
+                onClick={handleHideContactDetails}
+                alt="Back"
               />
+            )}
+            
 
-              <div className="contact-display-body" id="single-contact-display-div">
-                <AnimatePresence>
-                  {activeContact && 
-                    <ActiveContactModal contact={activeContact} isOpen={showActiveContact} onDelete={deleteContact} onEdit={setShowEditContactModal} />
-                  }
-                </AnimatePresence>
-              </div>
+            <div className="contact-display-body" id="single-contact-display-div">
+              <AnimatePresence>
+                {showActiveContact && (
+                  <ActiveContactModal
+                    contact={activeContact}
+                    isOpen={showActiveContact}
+                    onDelete={deleteContact}
+                    onEdit={() => setShowEditContactModal(true)}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
 
-              <div className="user-menu-bg d-none" id="scd-options-menu">
-                  <div className="scd-options-menu">
-                      <button className="scd-option-btn" onClick={handleEditContact}>
-                          <img src="assets/img/edit.png" alt="Edit" /> Edit
-                      </button>
-                      <button className="scd-option-btn" onClick={deleteContact}>
-                          <img src="assets/img/delete.png" alt="Delete" /> Delete
-                      </button>
-                  </div>
+            {/* <div className="user-menu-bg d-none" id="scd-options-menu">
+              <div className="scd-options-menu">
+                <button className="scd-option-btn" onClick={() => setShowEditContactModal(true)}>
+                  <img src="assets/img/edit.png" alt="Edit" /> Edit
+                </button>
+                <button className="scd-option-btn" onClick={deleteContact}>
+                  <img src="assets/img/delete.png" alt="Delete" /> Delete
+                </button>
               </div>
+            </div> */}
           </div>
-
-          <button className="add-contact-btn-mobile" id="addContactBtnMobile" onClick={setShowAddContactModal}>
-              <img src="assets/img/person_add.png" id="mobileContactOptionsBtn" alt="Add Contact" />
-          </button>
-    
-          <AnimatePresence>
-            {showAddContactModal && (
-              <AddContactModal 
-                isOpen={showAddContactModal} 
-                onClose={() => setShowAddContactModal(false)} 
-                contacts={contacts}
-                currentUser={currentUser}
-                setContacts={setContacts}
-              />
-            )}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {showEditContactModal && (
-              <EditContactModal 
-                isOpen={showEditContactModal} 
-                contact={activeContact} 
-                onClose={() => setShowEditContactModal(false)} 
-                onDelete={deleteContact}
-                setContacts={setContacts}
-                currentUser={currentUser}
-                setActiveContact={setActiveContact}
-              />
-            )}
-          </AnimatePresence>
-        </div>
-
+        )}
         
-      );
+
+        {isMobile && !showActiveContact && (
+          <button className="add-contact-btn-mobile" id="addContactBtnMobile" onClick={() => setShowAddContactModal(true)}>
+            <img src="assets/img/person_add.png" id="mobileContactOptionsBtn" alt="Add Contact" />
+          </button>
+        )}
+
+        <AnimatePresence>
+          {showAddContactModal && (
+            <AddContactModal 
+              isOpen={showAddContactModal} 
+              onClose={() => setShowAddContactModal(false)} 
+              contacts={groupedContacts}
+              currentUser={currentUser}
+              setContacts={setContacts}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {showEditContactModal && activeContact && (
+            <EditContactModal 
+              isOpen={showEditContactModal} 
+              contact={activeContact} 
+              onClose={() => setShowEditContactModal(false)} 
+              onDelete={deleteContact}
+              setContacts={setContacts}
+              currentUser={currentUser}
+              setActiveContact={setActiveContact}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+  );
 }
 
 export default Contacts;
