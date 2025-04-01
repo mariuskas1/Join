@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import "./Signup.css";
 import "../../index.css";
 import Modal from "../../components/Modal/Modal";
+import { postData } from "../../services/apiService";
 
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/register/";
@@ -18,6 +19,8 @@ const SignUp = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('')
     const navigate = useNavigate();
+
+    const saveContactToken = "05ed591a17495a3919862aa9cd673cda64ee9529"
   
     const handleInputChange = (e, setter) => {
       setter(e.target.value);
@@ -90,9 +93,33 @@ const SignUp = () => {
     }
    
 
-    const createNewContactForSignedUpUser = () => {
-
+    const createNewContactForSignedUpUser = async () => {
+      let newContact = getNewContactObject();
+      await postData("contacts/", newContact, saveContactToken);
     }
+
+
+    const getNewContactObject = () => {
+      const newContact = {
+        name: name,
+        mail: email,
+        phone: "",
+        initials: getContactInitials(name),
+        info: "Contact Information",
+        color: "#FFBB2B",
+      };
+
+      return newContact;
+    }
+  
+    const getContactInitials = (name) => {
+      return name
+        .split(/\s+/)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase();
+    };
+    
   
     return (
       <div className="index-main">
