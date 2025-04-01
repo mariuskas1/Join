@@ -410,8 +410,11 @@ label{
 }
 
 @media(max-width: 1250px){
+    .add-task-form{
+        width: 100%;
+    }
     .addTaskColumn{
-        width: 32%;
+        width: 42%;
     }
     .form-bottom{
         width: 67%;

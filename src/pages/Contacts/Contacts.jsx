@@ -158,15 +158,17 @@ const Contacts = () => {
           </div>
         )}
 
-        {isMobile && showActiveContact && (
+        {!isMobile || showActiveContact ? (
           <div className="contact-display">
             
-              <div className="contacts-display-header">
-                <h1>Contacts</h1>
-                <div className="contacts-header-bar" id="c-header-bar-desktop"></div>
-                <span className="contacts-header-span">Better with a team</span>
-                <div className="contacts-header-bar" id="c-header-bar-mobile"></div>
-              </div>
+          
+            <div className="contacts-display-header">
+              <h1>Contacts</h1>
+              <div className="contacts-header-bar" id="c-header-bar-desktop"></div>
+              <span className="contacts-header-span">Better with a team</span>
+              <div className="contacts-header-bar" id="c-header-bar-mobile"></div>
+            </div>
+          
             
 
             {isMobile && showActiveContact && (
@@ -203,10 +205,11 @@ const Contacts = () => {
               </div>
             </div> */}
           </div>
-        )}
+        ) : null}
+      
         
 
-        {isMobile && !showActiveContact && (
+        {(isMobile && !showActiveContact) && (
           <button className="add-contact-btn-mobile" id="addContactBtnMobile" onClick={() => setShowAddContactModal(true)}>
             <img src="assets/img/person_add.png" id="mobileContactOptionsBtn" alt="Add Contact" />
           </button>
