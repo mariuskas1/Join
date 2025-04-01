@@ -121,6 +121,7 @@ h2{
     align-items: center;
     background-color: rgb(246, 247, 248);
     transition: all 125ms ease;
+    overflow: hidden;
 }
 
 #main-content{
@@ -141,7 +142,7 @@ h2{
 }
 
 
-@media(max-width:600px){
+@media(max-width:650px){
     main{
         left: 0;
         padding-left: 24px;
@@ -155,14 +156,15 @@ h2{
         margin-top: 32px;
         }
     .index-header-logo{
-        width:64px;
-        height: 78px;
+        width:64px !important;
+        height: 78px !important;
     }
     .index-header{
-        padding-left: 40px;
+        padding-left: 40px !important;
+        padding-right: 40px !important;
     }
     .log-in, .sign-up{
-        width: 100%;
+        width: 100% !important;
     }
     .sign-up{
         height: 540px;
@@ -175,6 +177,10 @@ h2{
     }
     .log-in-buttons-div{
         width: 75%;
+    }
+
+    form{
+        width: 90% !important;
     }
   
 
@@ -259,5 +265,145 @@ h2{
     }
     .task-display-large{
         padding-bottom: 8px;
+    }
+}
+
+
+@media (max-height:800px){
+    .index-header, .index-header-2{
+        margin-top: 24px;
+    }
+    .index-header-logo{
+        height: 100px;
+        width: 80px;
+    }
+    .index-header-div{
+        height: 40px;
+    }
+    .index-header-text{
+        font-size: 18px;
+    }
+    .sign-up-btn{
+        height: 40px;
+    }
+    .log-in{
+        height: 420px;
+        width: 520px;
+        margin-top: 56px;
+    }
+    .log-in h2, .sign-up h2{
+        font-size: 48px;
+        margin-top: 32px;
+    }
+    .index-input{
+        height: 40px;
+        margin-bottom: 24px;
+    }
+    .sign-up .index-input{
+        margin-bottom: 12px;
+    }
+    .sign-up .index-input-icon{
+        margin-top: 12px;
+    }
+    .log-in form{
+        margin-top: 16px;
+        width: 400px;
+    }
+    .checkbox-container{
+        height: 16px;
+    }
+    .log-in-buttons-div{
+        margin-top: 24px;
+        height: 40px;
+    }
+    .index-link-div{
+        bottom: 8px;
+    }
+    .index-link-div a{
+        font-size: 14px;
+    }
+
+    .sign-up{
+        width: 550px;
+        height: 510px;
+    }
+    .sign-up form{
+        margin-top: 8px;
+    }
+    .sign-up-btn-2{
+        margin-top: 24px;
+    }
+}
+
+
+#sign-up-div-mobile{
+    display: none;
+}
+
+
+@media(max-width: 500px){
+    .log-in{
+        height: 460px;
+        margin-top: 40px;
+    }
+    .log-in h2, .sign-up h2{
+        font-size: 47px;
+        margin-top: 24px;
+    }
+    .sign-up{
+        height: 500px;
+    }
+
+    .log-in-buttons-div{
+       flex-direction: column;
+       width: 100%;
+       height: 100px;
+       align-items: center;
+    }
+    .log-in-btn{
+        width: 180px;
+        margin-bottom: 8px;
+        height: 51px;
+    }
+    .guest-log-in-btn{
+        width: 180px;
+        height: 51px;
+    }
+    .log-in-underline{
+        margin-top: 16px;
+        margin-bottom: 8px;
+    }
+    .index-header-text{
+        font-size: 16px;
+    }
+    #sign-up-div-mobile{
+     
+        margin-top: 16px;
+    }
+   
+}
+
+@media(max-width: 400px){
+    .log-in-buttons-div{
+        margin-top: 8px;
+     }
+     .return-img-sign-up{
+        left: 32px;
+     }
+}
+
+@media(max-height: 700px){
+    .log-in input, button{
+        height: 40px;
+    }
+    .log-in{
+        height: 410px;
+    }
+    .sign-up-btn-2{
+        margin-top: 8px;
+    }
+    .sign-up{
+        height: 480px;
+
     }
 }
