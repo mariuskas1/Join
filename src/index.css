@@ -142,7 +142,7 @@ h2{
 }
 
 
-@media(max-width:650px){
+@media(max-width:600px){
     main{
         left: 0;
         padding-left: 24px;

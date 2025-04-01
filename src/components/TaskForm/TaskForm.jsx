@@ -217,6 +217,7 @@ const TaskForm = ({ contacts, currentUserData, onTaskAdded, taskStatus = "todo" 
           <div className="prio-btns">
             <div className="input-container">
               <input
+                className='prio-radio-btn'
                 type="radio"
                 id="urgent"
                 name="prio"
@@ -226,11 +227,12 @@ const TaskForm = ({ contacts, currentUserData, onTaskAdded, taskStatus = "todo" 
               />
               <div className="radio-tile" id="urgent-tile">
                 <label htmlFor="urgent">Urgent</label>
-                <img src="assets/img/urgent.png" alt="Urgent" />
+                <img src="assets/img/urgent.png" alt="Urgent" id="urgent-img"/>
               </div>
             </div>
             <div className="input-container">
               <input
+                className='prio-radio-btn'
                 type="radio"
                 id="medium"
                 name="prio"
@@ -245,6 +247,7 @@ const TaskForm = ({ contacts, currentUserData, onTaskAdded, taskStatus = "todo" 
             </div>
             <div className="input-container">
               <input
+                className='prio-radio-btn'
                 type="radio"
                 id="low"
                 name="prio"
@@ -254,7 +257,7 @@ const TaskForm = ({ contacts, currentUserData, onTaskAdded, taskStatus = "todo" 
               />
               <div className="radio-tile" id="low-tile">
                 <label htmlFor="low">Low</label>
-                <img src="assets/img/low.png" alt="Low" />
+                <img src="assets/img/low.png" alt="Low" id="low-img"/>
               </div>
             </div>
           </div>
