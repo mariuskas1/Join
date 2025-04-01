@@ -27,7 +27,7 @@ const Login = () => {
         }
 
         setTimeout(startLogoAnimation, 400);
-        setTimeout(checkForRememberedUser, 3500);
+        setTimeout(checkForRememberedUser, 2000);
     }, []);
 
     function startLogoAnimation() {
