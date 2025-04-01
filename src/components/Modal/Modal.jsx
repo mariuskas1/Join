@@ -10,9 +10,9 @@ const SignupModal = ({ isOpen, message }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ y: '400%' }}  
-          animate={{ y: isOpen ? 0 : '400%' }}  
-          exit={{ y: '400%' }} 
+          initial={{ y: '400%', x: "-50%" }}  
+          animate={{ y: isOpen ? 0 : '400%', x: "-50%" }}  
+          exit={{ y: '400%', x: "-50%" }} 
           transition={{ duration: 0.15, ease: 'easeInOut' }}
           className="sign-up-modal"
           id="sign-up-modal"

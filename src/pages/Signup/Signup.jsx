@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import "./Signup.css";
 import "../../index.css";
-import SignupModal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal/Modal";
 
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/register/";
@@ -15,7 +15,6 @@ const SignUp = () => {
     const [passwordTwo, setPasswordTwo] = useState("");
     const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
     const [isDisabled, setIsDisabled] = useState(true);
-    const [errorMessage, setErrorMessage] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('')
     const navigate = useNavigate();
@@ -177,7 +176,7 @@ const SignUp = () => {
         </div>
   
         
-        <SignupModal isOpen={isModalVisible} message={modalMessage}></SignupModal>
+        <Modal isOpen={isModalVisible} message={modalMessage}></Modal>
       </div>
     );
   };

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 import "../../index.css";
+import Modal from "../../components/Modal/Modal";
 
 
 
@@ -12,8 +13,9 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
     const [showLogo, setShowLogo] = useState(true);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('')
 
     const logoRef = useRef(null);
     const mainContentRef = useRef(null);
@@ -71,21 +73,29 @@ const Login = () => {
                 body: JSON.stringify({ username: email, password, email }),
             });
 
-            if (!response.ok) throw new Error("Invalid login credentials");
-
             const data = await response.json();
-            const user = { token: data.token, username: data.username, email: data.email, name: data.name };
-
-            localStorage.setItem("currentUser", JSON.stringify(user));
-            if (rememberMe) {
-                localStorage.setItem("rememberedUser", JSON.stringify(user));
-            }
-
-            navigate("/summary");
+            checkLoginResponse(data);
+            
         } catch (error) {
-            setErrorMessage("Email or password are incorrect!");
-            setTimeout(() => setErrorMessage(""), 2000);
+            displayModal("Login failed. Please try again.")
         }
+    }
+
+
+    const checkLoginResponse = (data) => {
+        if (!data.token) {
+            displayModal("Email or password are incorrect.");
+            setEmail("");
+            setPassword("");
+            return;
+        } 
+       
+        const user = { token: data.token, username: data.username, email: data.email, name: data.name };
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        if (rememberMe) {
+            localStorage.setItem("rememberedUser", JSON.stringify(user));
+        }
+        navigate("/summary");
     }
 
     async function guestLogin() {
@@ -103,6 +113,17 @@ const Login = () => {
             console.error("Guest login error:", error);
         }
     }
+
+
+    const displayModal = (message) => {
+        setModalMessage(message)
+        setIsModalVisible(true);
+        
+        setTimeout(() => {
+          setIsModalVisible(false);
+        }, 3000);
+      }
+
 
     return (
         <div>
@@ -180,7 +201,7 @@ const Login = () => {
                 </div>
             </div>
 
-            
+            <Modal isOpen={isModalVisible} message={modalMessage}></Modal>
         </div>
     );
 };
