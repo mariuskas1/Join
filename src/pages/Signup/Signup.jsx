@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import "./Signup.css";
 import "../../index.css";
-import SignupModal from "../../components/SignupModal/SignupModal";
+import SignupModal from "../../components/Modal/Modal";
 
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/register/";

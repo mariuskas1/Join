@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 import "../../index.css";
 
+
+
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/login/";
 const GUEST_URL = "https://marius-kasparek.developerakademie.org/join_server/api/guest-login/";
 
@@ -171,15 +173,14 @@ const Login = () => {
                     </form>
                 </div>
 
-                {/* Links */}
+               
                 <div className="index-link-div">
                     <Link to="/privacy-policy" target="_blank">Privacy Policy</Link>
                     <Link to="/legal-notice" target="_blank">Legal notices</Link>
                 </div>
             </div>
 
-            {/* Login Error Message */}
-            {errorMessage && <div id="log-in-msg" className="show">{errorMessage}</div>}
+            
         </div>
     );
 };
