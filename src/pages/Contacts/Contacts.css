@@ -520,7 +520,7 @@
         width: 100%;
         border-top-left-radius: 32px;
         border-top-right-radius: 32px;
-        border-bottom-left-radius: 0;
+        border-bottom-left-radius: 0 !important;
         justify-content: flex-start;
     }
     .add-contact-modal-right{
