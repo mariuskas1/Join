@@ -221,8 +221,9 @@ header{
     }
 }
 
-/* @media(max-width:400px) AND (max-height:800px){
-    header{
-        height: 80px !important;
-    }
-} */
+.hidden{
+    display: none;  /* Completely removes it from the layout */
+    pointer-events: none !important; /* Disables all mouse interactions */
+    cursor: default !important; /* Ensures cursor stays default */
+    visibility: hidden !important;
+}

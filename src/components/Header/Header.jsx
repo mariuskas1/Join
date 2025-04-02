@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css"; 
 import { getCurrentUserData } from "../../services/apiService";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate, useLocation } from "react-router-dom"; 
 
 
 
@@ -9,6 +9,9 @@ const Header = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate(); 
+
+  const location = useLocation();
+  const isPolicyPage = location.pathname === "/privacy-policy" || location.pathname === "/legal-notice" || location.pathname === "/help" ;
 
   useEffect(() => {
     const userData = getCurrentUserData();
@@ -59,7 +62,7 @@ const Header = () => {
             <div className="user-menu" onClick={(e) => e.stopPropagation()}>
               <a href="/legal-notice" target="_blank">Legal Notice</a>
               <a href="/privacy-policy" target="_blank">Privacy Policy</a>
-              <a href="/" onClick={logOut}>Log out</a>
+              <a href="/" onClick={logOut} className={`${isPolicyPage ? "hidden" : ""}`}>Log out</a>
             </div>
           </div>
         )}

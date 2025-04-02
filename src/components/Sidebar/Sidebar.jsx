@@ -5,7 +5,7 @@ import "./Sidebar.css";
 
 const Sidebar = () => {
   const location = useLocation();
-  const isPolicyPage = location.pathname === "/privacy-policy" || location.pathname === "/legal-notice";
+  const isPolicyPage = location.pathname === "/privacy-policy" || location.pathname === "/legal-notice" || location.pathname === "/help";
 
   const getImageSrc = (path) => {
     const formattedPath = path.replace('/', ''); // Remove leading slash if any
