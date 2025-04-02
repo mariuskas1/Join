@@ -17,4 +17,8 @@
     .sign-up{
         height: 450px !important;
     }
+
+    .index-header-text{
+        opacity: 0 !important;
+    }
 }

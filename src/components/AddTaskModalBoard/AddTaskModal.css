@@ -14,7 +14,7 @@
 
 .add-task-modal{
     width: 1116px;
-    height: 870px;
+    height: 800px;
     border-radius: 30px;
     background-color: white;
     padding: 64px;
@@ -40,4 +40,15 @@
 
 .add-task-modal *{
     border-radius: 12px;
+}
+
+
+@media(max-width:400px) AND (max-height:800px){
+    .add-task-modal{
+        height: 95dvh;
+        padding: 20px !important;
+    }
+    .form-bottom{
+        width: 100% !important;
+    }
 }

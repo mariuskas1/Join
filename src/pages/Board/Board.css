@@ -149,7 +149,7 @@
 
 .board-column-body{
     margin-top: 16px;
-    padding-bottom: 100px;
+    padding-bottom: 40px;
     min-height: 550px;
     transition: all 125ms ease;
 }
@@ -436,6 +436,22 @@
     }
 
 }
+
+@media(max-width:1200px){
+    .board-task-subtasks-display{
+        flex-direction: column;
+       
+        width: 90%;
+
+    }
+    .board-subtasks-display{
+        margin-top: 4px;
+    }
+    .board-subtasks-bar-container{
+        width: 100% !important;
+    }
+}
+
 @media(max-width: 1100px){
     .board-column{
         width: 15vw;
@@ -484,8 +500,16 @@
     }
 }
 
+@media(max-width:1200px){
+    .add-task-modal{
+        width: 90vw !important;
+    }
+    .form-bottom{
+        width: 75% !important;
+    }
+}
 
-@media(max-width: 850px){
+@media(max-width: 900px){
     .board-column{
         width: 13vw;
     }
@@ -511,6 +535,9 @@
     .add-task-modal .form-bottom{
         width: 70%;
     }
+    .add-task-modal{
+        padding: 40px !important;
+    }
    
 }
 
@@ -521,7 +548,11 @@
     .board-column{
         width: 58vw;
     }
+    .addTaskColumn{
+        width: 90% !important;
+    }
 }
+
 @media(max-width: 700px){
     .board-main-header{
         width: 56vw;
@@ -555,6 +586,9 @@
     }
     .board-searchbar-container-mobile{
         width: 53vw;
+    }
+    .addTaskColumn{
+        width: 100% !important;
     }
 }
 
