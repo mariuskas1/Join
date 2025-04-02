@@ -45,6 +45,33 @@ main * {
     border-radius: 10px;
 }
 
+.info-main{
+    position: fixed;
+    top: 96px;
+    left: 232px;
+    padding-top: 64px; 
+    padding-left: 96px;
+    padding-right: 40px;
+    padding-bottom: 64px;
+    background-color: rgb(246, 247, 248);
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    overflow-y: auto;
+}
+
+h2{
+    margin-bottom: 8px;
+    margin-top: 24px;
+}
+
+.info-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    margin-bottom: 24px;
+}
+
 h1{
     font-weight: 700;
     font-size: 61px;
@@ -185,9 +212,9 @@ h2{
   
 
     .info-main{
-        position: fixed;
-        top: 88px;
-        left: 0px;
+        position: fixed ;
+        top: 88px ;
+        left: 0px ;
         padding-top: 32px; 
         padding-left: 24px;
         padding-right: 24px;

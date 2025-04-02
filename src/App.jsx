@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Board from "./pages/Board/Board";
@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import HelpPage from "./pages/HelpPage";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="summary" element={<Summary />} />
                 <Route path="legal-notice" element={<LegalNotice />} />
                 <Route path="privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="help" element={<HelpPage />} />
               </Routes>
             </div>
           </div>
