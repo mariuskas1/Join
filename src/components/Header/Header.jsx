@@ -57,8 +57,8 @@ const Header = () => {
         {menuOpen && (
           <div className="user-menu-bg" id="user-menu" onClick={toggleUserMenu}>
             <div className="user-menu" onClick={(e) => e.stopPropagation()}>
-              <a href="/legal_notice" target="_blank">Legal Notice</a>
-              <a href="/privacy_policy" target="_blank">Privacy Policy</a>
+              <a href="/legal-notice" target="_blank">Legal Notice</a>
+              <a href="/privacy-policy" target="_blank">Privacy Policy</a>
               <a href="/" onClick={logOut}>Log out</a>
             </div>
           </div>

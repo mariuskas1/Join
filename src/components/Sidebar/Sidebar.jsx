@@ -5,6 +5,7 @@ import "./Sidebar.css";
 
 const Sidebar = () => {
   const location = useLocation();
+  const isPolicyPage = location.pathname === "/privacy-policy" || location.pathname === "/legal-notice";
 
   const getImageSrc = (path) => {
     const formattedPath = path.replace('/', ''); // Remove leading slash if any
@@ -19,19 +20,19 @@ const Sidebar = () => {
           <img className="sidebar-logo" src="/assets/img/logo_light.png" alt="Logo" />
 
           <div className="sidebar-menu">
-            <NavLink to="/summary" className="sidebar-menu-div summary-div">
+            <NavLink to="/summary" className={`sidebar-menu-div summary-div ${isPolicyPage ? "hidden" : ""}`}>
               <img className="sidebar-icon" src={getImageSrc("summary")} alt="Summary Icon" />
               <span>Summary</span>
             </NavLink>
-            <NavLink to="/add-task" className="sidebar-menu-div add-task-div">
+            <NavLink to="/add-task" className={`sidebar-menu-div add-task-div ${isPolicyPage ? "hidden" : ""}`}>
               <img className="sidebar-icon" src={getImageSrc("add-task")} alt="Add Task Icon" />
               <span>Add Task</span>
             </NavLink>
-            <NavLink to="/board" className="sidebar-menu-div board-div">
+            <NavLink to="/board" className={`sidebar-menu-div board-div ${isPolicyPage ? "hidden" : ""}`}>
               <img className="sidebar-icon" src={getImageSrc("board")} alt="Board Icon" />
               <span>Board</span>
             </NavLink>
-            <NavLink to="/contacts" className="sidebar-menu-div contacts-div">
+            <NavLink to="/contacts" className={`sidebar-menu-div contacts-div ${isPolicyPage ? "hidden" : ""}`}>
               <img className="sidebar-icon" src={getImageSrc("contacts")} alt="Contacts Icon" />
               <span>Contacts</span>
             </NavLink>
@@ -46,19 +47,19 @@ const Sidebar = () => {
         </div>
 
         <div className="mobile-menu" id="mobile-menu">
-          <NavLink to="/summary" className="mobile-menu-div summary-div">
+          <NavLink to="/summary" className={`mobile-menu-div summary-div ${isPolicyPage ? "hidden" : ""}`}>
             <img className="mobile-menu-icon" src={getImageSrc("summary")} alt="Summary" />
             <span>Summary</span>
           </NavLink>
-          <NavLink to="/board" className="mobile-menu-div board-div">
+          <NavLink to="/board" className={`mobile-menu-div board-div ${isPolicyPage ? "hidden" : ""}`}>
             <img className="mobile-menu-icon" src={getImageSrc("board")} alt="Board" />
             <span>Board</span>
           </NavLink>
-          <NavLink to="/add-task" className="mobile-menu-div add-task-div">
+          <NavLink to="/add-task" className={`mobile-menu-div add-task-div ${isPolicyPage ? "hidden" : ""}`}>
             <img className="mobile-menu-icon" src={getImageSrc("add-task")} alt="Add Task" />
             <span>Add Task</span>
           </NavLink>
-          <NavLink to="/contacts" className="mobile-menu-div contacts-div">
+          <NavLink to="/contacts" className={`mobile-menu-div contacts-div ${isPolicyPage ? "hidden" : ""}`}>
             <img className="mobile-menu-icon" src={getImageSrc("contacts")} alt="Contacts" />
             <span>Contacts</span>
           </NavLink>

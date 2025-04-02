@@ -156,3 +156,11 @@ a{
     }
   
 }
+
+
+.hidden{
+    opacity: 0;  /* Completely removes it from the layout */
+    pointer-events: none !important; /* Disables all mouse interactions */
+    cursor: default !important; /* Ensures cursor stays default */
+    visibility: hidden !important;
+}
