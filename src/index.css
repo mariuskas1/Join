@@ -72,6 +72,17 @@ h2{
     margin-bottom: 24px;
 }
 
+.return-img{
+    width: 37px;
+    height: 37px;
+    transition: all 100ms ease;
+}
+
+.return-img:hover{
+    cursor: pointer;
+    transform: scale(1.1)
+}
+
 h1{
     font-weight: 700;
     font-size: 61px;

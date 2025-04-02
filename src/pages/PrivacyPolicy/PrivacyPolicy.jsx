@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const PrivacyPolicy = () => {
     const navigate = useNavigate();
-    const location = useLocation();
 
     const navigateToPreviousPage = () => {
         const previousPage = localStorage.getItem('previousPage');
