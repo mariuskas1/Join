@@ -10,7 +10,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import LegalNotice from "./pages/LegalNotice/LegalNotice";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
-import HelpPage from "./pages/HelpPage";
+import HelpPage from "./pages/HelpPage/HelpPage";
 
 const App = () => {
   return (

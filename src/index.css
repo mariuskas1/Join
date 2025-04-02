@@ -227,7 +227,7 @@ h2{
         top: 80px !important;
         left: 0px ;
         padding-top: 32px; 
-        padding-left: 24px;
+        padding-left: 24px !important;
         padding-right: 24px;
         width: 100%;
         height: calc(100vh - 88px);
