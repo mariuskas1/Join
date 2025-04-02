@@ -8,7 +8,8 @@ const PrivacyPolicy = () => {
     const location = useLocation();
 
     const navigateToPreviousPage = () => {
-        navigate(location.state?.from);
+        const previousPage = localStorage.getItem('previousPage');
+        if (previousPage) navigate(previousPage);
     };
 
     return (

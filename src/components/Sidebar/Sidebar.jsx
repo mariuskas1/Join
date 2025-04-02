@@ -14,6 +14,10 @@ const Sidebar = () => {
       : `assets/img/${formattedPath}.png`;
   };
 
+  const saveCurrentPage = () => {
+    localStorage.setItem('previousPage', window.location.pathname);
+  }
+
   return (
       <>
         <div className="sidebar">
@@ -40,8 +44,8 @@ const Sidebar = () => {
 
           <div className="sidebar-menu-2">
             <div className="sidebar-2-div">
-              <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-              <a href="/legal-notice" target="_blank" rel="noopener noreferrer">Legal Notices</a>
+              <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" onClick={saveCurrentPage}>Privacy Policy</a>
+              <a href="/legal-notice" target="_blank" rel="noopener noreferrer" onClick={saveCurrentPage}>Legal Notices</a>
             </div>
           </div>
         </div>
