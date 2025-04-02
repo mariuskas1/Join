@@ -459,7 +459,7 @@ label{
         margin-bottom: 4px;
     }
     .addTaskColumn{
-        width: 90%;
+        width: 95%;
     }
     .add-task-modal .addTaskColumn{
         width: 80%;
@@ -493,7 +493,7 @@ label{
         margin-bottom: 4px;
     }
     .form-bottom{
-        width: 57%;
+        width: 60%;
         align-items: center;
     }
 
@@ -514,6 +514,17 @@ label{
     .form-bottom{
         width: 50%;
         bottom: 120px;
-        
+    }
+    .create-task-btn{
+        width: 160px;
+    }
+}
+
+@media(max-width:600px){
+    .addTaskColumn{
+        width: 100%;
+    }
+    .form-bottom{
+        width: 80%;
     }
 }
