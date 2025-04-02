@@ -50,6 +50,11 @@ const Header = () => {
   const saveCurrentPage = () => {
     localStorage.setItem('previousPage', window.location.pathname);
   }
+
+  const navigateToHelpPage = () => {
+    saveCurrentPage();
+    window.open("/help", "_blank");
+  }
   
     return (
       <header>
@@ -57,7 +62,7 @@ const Header = () => {
         <img src="/assets/img/logo_dark.png" className="header-logo-mobile" alt="Logo" />
         
         <div className="header-icons">
-          <img className="help-icon" src="/assets/img/help.png" alt="Help Icon" onClick={() => navigate("/help")}/>
+          <img className="help-icon" src="/assets/img/help.png" alt="Help Icon" onClick={navigateToHelpPage}/>
           <div className="user-initials" id="user-initials" onClick={toggleUserMenu}>{getUserInitials()}</div>
         </div>
 
