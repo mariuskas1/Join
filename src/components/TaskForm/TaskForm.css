@@ -528,3 +528,11 @@ label{
         width: 80%;
     }
 }
+
+@media(max-width:400px) AND (max-height:800px){
+    .form-bottom{
+        position: unset;
+        margin-top: 32px;
+        width: 90%;
+    }
+}

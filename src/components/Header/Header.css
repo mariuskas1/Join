@@ -220,3 +220,9 @@ header{
         height: calc(100vh - 140px);
     }
 }
+
+/* @media(max-width:400px) AND (max-height:800px){
+    header{
+        height: 80px !important;
+    }
+} */
