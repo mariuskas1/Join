@@ -178,3 +178,17 @@
 .large-prio-icon{
     margin-right: 8px;
 }
+
+
+@media(max-width: 800px){
+    .large-task-title{
+        font-size: 40px !important;
+        line-height: 48px !important;
+    }
+}
+
+@media(max-width:400px) AND (max-height:800px){
+    .task-display-large{
+        height: 90dvh;
+    }
+}
