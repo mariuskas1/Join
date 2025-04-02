@@ -22,6 +22,14 @@ const Summary = () => {
         awaitingFeedback: 0,
     });
 
+    const [showMobileGreeting, setMobileGreeting] = useState(true);
+    useEffect(() => {
+      setTimeout(() => {
+        setMobileGreeting(false);
+      }, 2000);
+    }, [])
+    
+
 
     useEffect(() => {
             const userData = getCurrentUserData();
@@ -200,10 +208,13 @@ const Summary = () => {
             </div>
         </div>
 
-        <div className="summary-greeting-mobile">
-            <span className="greeting-daytime">{greeting}</span>
-            <span className="greeting-name">{currentUser && currentUser.name}</span>
-        </div>
+        {showMobileGreeting && (
+            <div className="summary-greeting-mobile" id="mobile-summary-greeting">
+                <span className="greeting-daytime">{greeting}</span>
+                <span className="greeting-name">{currentUser && currentUser.name}</span>
+            </div>
+        )}
+        
       </main>
     );
   };
