@@ -1,2 +1,20 @@
 
 
+@media(max-width:600px){
+    .sign-up{
+        width: 90% !important;
+    }
+
+    .sign-up form{
+        width: 100% !important;
+    }
+}
+
+@media(max-width:400px) AND (max-height:800px){
+    /* .index-input-container{
+        max-width: 75%;
+    } */
+    .sign-up{
+        height: 450px !important;
+    }
+}
