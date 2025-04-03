@@ -47,3 +47,20 @@ export async function postData(url, data = {}, token) {
   }
   
   
+  export const tryFetchWithAuthentication = async () => {
+    try {
+        const currentUserData = localStorage.getItem("currentUser"); 
+        const response = await fetch(BASE_URL + "contacts/", {
+            method: "GET",
+            headers: {
+                "Authorization": `Token ${currentUserData.token}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        return response.ok; 
+    } catch (error) {
+        console.error("Error validating token:", error);
+        return false;
+    }
+};
