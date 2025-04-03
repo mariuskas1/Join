@@ -432,14 +432,17 @@
     .add-contact-btn-mobile{
         opacity: 1;
     }
-    .add-contact-modal{
-        height: 100vh;
-        width: 100vw;
+    .add-contact-modal, .edit-contact-modal{
+        height: 90vh !important;
+        width: 90vw !important;
     }
+
+    
     .add-contact-modal-left{
         border-top-left-radius: 0;
         border-top-right-radius: 0;
-        padding-left: 24px;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
     }
     .add-contact-modal-right{
         border-bottom-left-radius: 0;
