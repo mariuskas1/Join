@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import "./Contacts.css";
 import "../../index.css";
-import { getCurrentUserData, getAllContacts } from '../../services/apiService';
+import { getCurrentUserData, getAllContacts, checkUserAuthentication } from '../../services/apiService';
 import ActiveContactModal from '../../components/ActiveContactModal/ActiveContactModal';
 import { AnimatePresence } from 'framer-motion';
 import AddContactModal from '../../components/AddContactModal/AddContactModal';
 import EditContactModal from '../../components/EditContactModal/EditContactModal';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Contacts = () => {
+    const navigate = useNavigate(); 
     const [currentUser, setCurrentUser] = useState(null);
     const [contacts, setContacts] = useState([]);
     const [groupedContacts, setGroupedContacts] = useState({});
@@ -27,9 +28,24 @@ const Contacts = () => {
 
       
     useEffect(() => {
-      const userData = getCurrentUserData();
-      setCurrentUser(userData);
-    }, []);
+        const userData = getCurrentUserData(); 
+        if (!userData) {
+          navigate("/login");
+        } else {
+          handleAuthCheckResponse(userData);
+        }
+      }, [navigate]);
+
+
+    const handleAuthCheckResponse = (userData) => {
+        checkUserAuthentication(userData).then((isAuthenticated) => {
+            if (isAuthenticated) {
+                setCurrentUser(userData);
+            } else {
+                navigate("/login");
+            }
+        });
+    }
 
     useEffect(() => {
       const handleResize = () => {

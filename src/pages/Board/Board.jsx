@@ -6,14 +6,16 @@ import TaskCard from '../../components/TaskCard/TaskCard';
 import TaskModal from '../../components/TaskModal/TaskModal';
 import AddTaskModal from '../../components/AddTaskModalBoard/AddTaskModal';
 import { AnimatePresence } from "framer-motion";
-import { getCurrentUserData } from '../../services/apiService';
+import { checkUserAuthentication, getCurrentUserData } from '../../services/apiService';
 import { getAllContacts } from '../../services/apiService';
+import { useNavigate } from 'react-router-dom';
 
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
 
 const Board = () => {
+    const navigate = useNavigate(); 
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -40,9 +42,24 @@ const Board = () => {
     };
 
     useEffect(() => {
-            const userData = getCurrentUserData();
-            setCurrentUser(userData);
-    }, []);
+        const userData = getCurrentUserData(); 
+        if (!userData) {
+          navigate("/login");
+        } else {
+          handleAuthCheckResponse(userData);
+        }
+      }, [navigate]);
+
+
+    const handleAuthCheckResponse = (userData) => {
+        checkUserAuthentication(userData).then((isAuthenticated) => {
+            if (isAuthenticated) {
+                setCurrentUser(userData);
+            } else {
+                navigate("/login");
+            }
+        });
+    }
     
     useEffect(() => {
         const fetchContacts = async () => {
