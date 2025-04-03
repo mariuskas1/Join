@@ -14,7 +14,7 @@ const SignupModal = ({ isOpen, message }) => {
           animate={{ y: isOpen ? 0 : '400%', x: "-50%" }}  
           exit={{ y: '400%', x: "-50%" }} 
           transition={{ duration: 0.15, ease: 'easeInOut' }}
-          className="sign-up-modal"
+          className="msg-modal"
           id="sign-up-modal"
         >
           <div

@@ -80,6 +80,7 @@ const Contacts = () => {
           }
     }, [contacts]);
 
+    
     function sortContacts() {
         const grouped = {};
         const sortedContacts = [...contacts].sort((a, b) => a.name.localeCompare(b.name));
@@ -142,9 +143,6 @@ const Contacts = () => {
       setActiveContact(null);
     };
 
-    const handleEditContact = () => {
-
-    }
 
     const deleteContact = async () => {
       try {
@@ -172,6 +170,7 @@ const Contacts = () => {
       setShowAddContactModal(false);
       displayModal("Contact succesfully created.");
     } 
+
 
     const displayModal = (message) => {
       setModalMessage(message)

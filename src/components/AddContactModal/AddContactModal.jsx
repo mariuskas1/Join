@@ -6,6 +6,8 @@ import "./AddContactModal.css";
 import "../../pages/Contacts/Contacts.css";
 import { postData } from "../../services/apiService";
 
+
+
 const AddContactModal = ({ isOpen, onClose, onContactCreation, contacts, setContacts, currentUser }) => {
     const colors = ["#FF7A00", "#9327FF", "#6E52FF", "#FC71FF", "#FFBB2B", "#1FD7C1", "#FF4646"];
     let colorIndex = 0;

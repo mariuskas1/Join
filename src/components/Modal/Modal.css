@@ -1,5 +1,4 @@
-.sign-up-modal{
-
+.msg-modal{
     padding: 16px;
     height: 74px;
     background: rgba(42, 54, 71, 1);
@@ -16,4 +15,12 @@
     bottom: 20%;
     left: 50%; 
     transform: translateX(-50%); 
+}
+
+
+@media(max-width: 600px){
+    .msg-modal{
+        width: 80vw;
+        height: 90px;
+    }
 }
