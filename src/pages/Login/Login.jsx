@@ -26,17 +26,15 @@ const Login = () => {
             logoRef.current.src = "/assets/img/logo_light.png";
         }
 
-        setTimeout(startLogoAnimation, 400);
+        setTimeout(startLogoAnimation, 500);
         setTimeout(checkForRememberedUser, 2000);
     }, []);
 
     function startLogoAnimation() {
-
         const headerLogo = document.getElementById("index-header-logo");
         if (!headerLogo) return;
 
         const headerLogoPosition = headerLogo.getBoundingClientRect();
-
         logoRef.current.style.top = `${headerLogoPosition.top}px`;
         logoRef.current.style.left = `${headerLogoPosition.left}px`;
 
@@ -49,10 +47,10 @@ const Login = () => {
 
         setTimeout(() => {
             if (mainContentRef.current) {
-                mainContentRef.current.classList.remove("hidden");
+                mainContentRef.current.classList.remove("index-hidden");
             }
             setShowLogo(false);
-        }, 1000);
+        }, 500);
     }
 
     function checkForRememberedUser() {
@@ -141,7 +139,7 @@ const Login = () => {
             )}
 
             {/* Main Content */}
-            <div className="index-main hidden" ref={mainContentRef}>
+            <div className="index-main index-hidden" ref={mainContentRef}>
                 <div className="index-header">
                     <img src="/assets/img/logo_dark.png" className="index-header-logo" id="index-header-logo" alt="Logo" />
                     <div className="index-header-div">

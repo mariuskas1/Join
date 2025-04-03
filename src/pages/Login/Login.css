@@ -1,7 +1,7 @@
 
 
 .initial-logo-div{
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -42,14 +42,14 @@
 .index-header-logo{
     height: 121.97px;
     width: 100.03px;
-    transition: all 1s ease;
+    transition: all 500ms ease;
 }
 
 .index-header-logo-size{
     height: 121.97px;
     width: 100.03px;
     position: absolute;
-    transition: all 1s ease;
+    transition: all 500ms ease;
 }
 
 .index-header-div{
@@ -380,14 +380,14 @@ input[type=checkbox] {
 .index-header-logo-800{
     height: 100px;
     width: 80px;
-    transition: all 1s ease;
+    transition: all 500ms ease;
     position: absolute;
 }
 
 .index-header-logo-600{
     width: 64px;
     height: 78px;
-    transition: all 1s ease;
+    transition: all 500ms ease;
     position: absolute;
 }
 
@@ -565,4 +565,9 @@ input[type=checkbox] {
     .log-in{
         height: 440px;
     }
+}
+
+
+.index-hidden{
+    opacity: 0;
 }
