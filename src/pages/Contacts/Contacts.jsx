@@ -7,6 +7,8 @@ import { AnimatePresence } from 'framer-motion';
 import AddContactModal from '../../components/AddContactModal/AddContactModal';
 import EditContactModal from '../../components/EditContactModal/EditContactModal';
 import { useNavigate } from 'react-router-dom';
+import Modal from "../../components/Modal/Modal";
+
 
 
 const Contacts = () => {
@@ -21,6 +23,9 @@ const Contacts = () => {
     const [showEditContactModal, setShowEditContactModal] = useState(false);
     const [showContactDetails, setShowContactDetails] = useState(false);
     const [showScdOptionsMenu, setShowScdOptionsMenu] = useState(false);
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('')
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1080);
 
@@ -163,6 +168,20 @@ const Contacts = () => {
       }
     }
 
+    const handleContactCreation = () => {
+      setShowAddContactModal(false);
+      displayModal("Contact succesfully created.");
+    } 
+
+    const displayModal = (message) => {
+      setModalMessage(message)
+      setIsModalVisible(true);
+      
+      setTimeout(() => {
+        setIsModalVisible(false);
+      }, 2000);
+    }
+
 
     return (
       <div className="main-contacts">
@@ -239,6 +258,7 @@ const Contacts = () => {
           {showAddContactModal && (
             <AddContactModal 
               isOpen={showAddContactModal} 
+              onContactCreation={handleContactCreation} 
               onClose={() => setShowAddContactModal(false)} 
               contacts={contacts}
               currentUser={currentUser}
@@ -260,6 +280,8 @@ const Contacts = () => {
             />
           )}
         </AnimatePresence>
+
+        <Modal isOpen={isModalVisible} message={modalMessage}></Modal>
       </div>
   );
 }
