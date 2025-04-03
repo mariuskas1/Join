@@ -3,6 +3,7 @@ import "./Summary.css";
 import "../../index.css";
 import { getCurrentUserData } from "../../services/apiService";
 import { useNavigate } from "react-router-dom"; 
+import { checkUserAuthentication } from "../../services/apiService";
 
 
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
@@ -32,9 +33,24 @@ const Summary = () => {
 
 
     useEffect(() => {
-            const userData = getCurrentUserData();
-            setCurrentUser(userData);
-    }, []);
+        const userData = getCurrentUserData(); 
+        if (!userData) {
+          navigate("/login");
+        } else {
+          handleAuthCheckResponse(userData);
+        }
+      }, [navigate]);
+
+
+    const handleAuthCheckResponse = (userData) => {
+        checkUserAuthentication(userData).then((isAuthenticated) => {
+            if (isAuthenticated) {
+                setCurrentUser(userData);
+            } else {
+                navigate("/login");
+            }
+        });
+    }
        
 
     useEffect(() => {

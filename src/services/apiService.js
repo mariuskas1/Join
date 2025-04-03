@@ -1,3 +1,4 @@
+
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
 
@@ -45,15 +46,20 @@ export async function postData(url, data = {}, token) {
       throw error;
     }
   }
+
+
+  export const checkUserAuthentication = async (userData) => {
+    const isTokenValid = await tryFetchWithAuthentication(userData.token);
+    return isTokenValid;
+  }
   
   
-  export const tryFetchWithAuthentication = async () => {
+ const tryFetchWithAuthentication = async (token) => {
     try {
-        const currentUserData = localStorage.getItem("currentUser"); 
         const response = await fetch(BASE_URL + "contacts/", {
             method: "GET",
             headers: {
-                "Authorization": `Token ${currentUserData.token}`,
+                "Authorization": `Token ${token}`,
                 "Content-Type": "application/json",
             },
         });
