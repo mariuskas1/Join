@@ -35,7 +35,6 @@ const Login = () => {
         if (!headerLogo) return;
 
         const headerLogoPosition = headerLogo.getBoundingClientRect();
-        console.log(headerLogoPosition);
         logoRef.current.style.top = `${headerLogoPosition.top}px`;
         logoRef.current.style.left = `${headerLogoPosition.left}px`;
 

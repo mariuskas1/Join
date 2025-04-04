@@ -71,8 +71,12 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
     
     const handleSubtaskChange = (index, event) => {
         const updatedSubtasks = [...subtasks];
-        updatedSubtasks[index] = event.target.value;
+        updatedSubtasks[index] = {
+            ...updatedSubtasks[index],
+            title: event.target.value
+        };
         setSubtasks(updatedSubtasks);
+        task.subtasks = updatedSubtasks;
     };
     
     const handleSubtaskBlur = () => {
@@ -318,7 +322,7 @@ const EditTaskForm = ({ task, contacts, currentUser, hideForm }) => {
                                         </option>
                                     ))
                                 ) : (
-                                    <option disabled>No contacts available</option> // Placeholder when contacts are not available
+                                    <option disabled>No contacts available</option> 
                                 )}
                             </select>
                         </div>
