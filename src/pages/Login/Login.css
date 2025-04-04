@@ -16,7 +16,7 @@
     transform: translate(-50%, -50%);
     width: 274px;
     height: 334px;
-    transition: all 100ms ease;
+    transition: all 700ms ease;
 }
 
 @media(max-width:480px){
@@ -42,14 +42,14 @@
 .index-header-logo{
     height: 121.97px;
     width: 100.03px;
-    transition: all 500ms ease;
+    transition: all 700ms ease;
 }
 
 .index-header-logo-size{
     height: 121.97px;
     width: 100.03px;
     position: absolute;
-    transition: all 500ms ease;
+    transition: all 700ms ease;
 }
 
 .index-header-div{
