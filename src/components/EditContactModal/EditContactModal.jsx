@@ -91,7 +91,7 @@ const EditContactModal = ({ contact, isOpen, onClose,  onDelete, setContacts, cu
                     <img src="assets/img/mail.png" className="index-input-icon add-contact-icon" id="mail-icon"/>
                     <input
                       type="email"
-                      name="email"
+                      name="mail"
                       placeholder="Email"
                       value={editedContact?.mail ?? ""}
                       onChange={handleChange}
